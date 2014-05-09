@@ -6,7 +6,7 @@ angular
     'ngResource',
     'ngSanitize',
     'ngRoute',
-    'googlechart.directives'
+    'googlechart'
   ])
   .config(function ($routeProvider) {
     $routeProvider

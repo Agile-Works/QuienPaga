@@ -25,18 +25,18 @@ namespace QuienPaga.Api
 
             ObjectFactory.Configure(x => x.For<IRepository>().Singleton().Use<Repository>());
 
-            Cache cache = HttpRuntime.Cache;
-            if (cache.Get("DataQuery") == null)
-            {
-                var data = new QPFormulas().All();
-                var model = new List<DataModel>();
-                foreach (var d in data)
-                {
-                    var detalle = new DataModel() { DETALLE = d.DETALLE, FECHA = d.FECHA, MONTO = d.MONTO, ORIGEN = d.ORIGEN, PARTIDA = d.PARTIDA, PARTIDO = d.PARTIDO, SECTOR = d.SECTOR };
-                    model.Add(detalle);
-                }
-                cache.Add("DataQuery", model, null, DateTime.Now.AddYears(100), TimeSpan.Zero, CacheItemPriority.Normal, null);
-            }
+            //Cache cache = HttpRuntime.Cache;
+            //if (cache.Get("DataQuery") == null)
+            //{
+            //    var data = new QPFormulas().All();
+            //    var model = new List<DataModel>();
+            //    foreach (var d in data)
+            //    {
+            //        var detalle = new DataModel() { DETALLE = d.DETALLE, FECHA = d.FECHA, MONTO = d.MONTO, ORIGEN = d.ORIGEN, PARTIDA = d.PARTIDA, PARTIDO = d.PARTIDO, SECTOR = d.SECTOR };
+            //        model.Add(detalle);
+            //    }
+            //    cache.Add("DataQuery", model, null, DateTime.Now.AddYears(100), TimeSpan.Zero, CacheItemPriority.Normal, null);
+            //}
 
         }
     }

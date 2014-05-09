@@ -31,5 +31,54 @@ namespace QuienPaga.Api.Repos
             }
 
         }
+
+        public IEnumerable<dynamic> GetMainData()
+        {
+           return new QPFormulas().Query(@"SELECT Partido as 'Label', SUM(Monto) as 'Monto'
+                                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+                                                Group by PARTIDO"); 
+        }
+
+        public IEnumerable<dynamic> GetSectorbyPoliticalParty(string partido)
+        {
+            return new QPFormulas().Query(@"SELECT Sector as 'Label', SUM(Monto) as 'Monto'
+                                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+                                                Where Partido like @0
+                                                Group by Sector",partido); 
+        }
+
+        public IEnumerable<dynamic> GetOriginbyPoliticalParty(string partido)
+        {
+            return new QPFormulas().Query(@"SELECT ORIGEN as 'Label', SUM(Monto) as 'Monto'
+                                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+                                                Where Partido like @0
+                                                Group by ORIGEN", partido);
+        }
+
+        public IEnumerable<dynamic> GetDatabyPoliticalSector(string partido, string sector)
+        {
+            return new QPFormulas().Query(@"SELECT Detalle as 'Label', SUM(Monto) as 'Monto'
+                                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+                                                Where Partido like @0
+                                                Group by Sector", partido); 
+        }
+
+        public IEnumerable<dynamic> GetDatabyDetail(string partido, string origen)
+        {
+            object[] parametros = { partido, origen };
+
+            return new QPFormulas().Query(@"SELECT DETALLE as 'Label', SUM(Monto) as 'Monto'
+                                            FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+                                            WHERE partido=@0 and origen=@1
+                                            GROUP BY DETALLE",parametros);
+        }
+
+        public IEnumerable<dynamic> GetDatabyContributor(string person)
+        {
+            return new QPFormulas().Query(@"SELECT PARTIDO as 'Label', SUM(Monto) as 'Monto'
+                                            FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+                                            WHERE DETALLE = @0
+                                            GROUP BY PARTIDO", person);
+        }
     }
 }

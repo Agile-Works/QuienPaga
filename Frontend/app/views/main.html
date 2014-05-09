@@ -6,7 +6,17 @@
   </ul>
   <h3 class="text-muted">QuienPaga</h3>
 </div>
-<div google-chart chart="chart" style="padding:0;width:400px;margin:auto">
+<div google-chart chart="chart" style="padding:0;width:400px;margin:auto"></div>
+<div>
+<button ng-click="mainData()">
+  Request
+</button>
+<ul>
+  <li ng-repeat="dato in result">
+    <span ng-click= "DataByPoliticalParty(dato.Label)">{{dato.Label}} {{dato.Monto}}</span>
+  </li>
+</ul>
+
 </div>
 <div class="footer">
   AgileWorks :) 

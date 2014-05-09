@@ -9,5 +9,12 @@ namespace QuienPaga.Api.Repos
     public interface IRepository
     {
         IList<DataModel> GetDataFromCache();
+        IEnumerable<dynamic> GetMainData();
+        IEnumerable<dynamic> GetSectorbyPoliticalParty(string partido);
+        IEnumerable<dynamic> GetOriginbyPoliticalParty(string partido);
+        IEnumerable<dynamic> GetDatabyPoliticalSector(string partido, string sector);
+        IEnumerable<dynamic> GetDatabyDetail(string partido, string origen);
+        IEnumerable<dynamic> GetDatabyContributor(string person);
+        
     }
 }
