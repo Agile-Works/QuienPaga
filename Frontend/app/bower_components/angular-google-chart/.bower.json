@@ -32,7 +32,6 @@
     "commit": "1a639e51c20ee5a32fcfa32ee740ba488b738f4a"
   },
   "_source": "git://github.com/bouil/angular-google-chart.git",
-  "_target": "~0.0.9",
-  "_originalSource": "angular-google-chart",
-  "_direct": true
+  "_target": "0.0.9",
+  "_originalSource": "angular-google-chart"
 }

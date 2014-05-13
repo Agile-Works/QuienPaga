@@ -5,23 +5,26 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute',
+    'ui.router',
     'googlechart'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
+  .config(function ($stateProvider,$urlRouterProvider) {
+ //   $urlRouterProvider.otherwise('/home');
+  
+    $stateProvider
+      .state('todos', {
+        url:'/home',
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
-      }).when('/DataByPoliticalParty', {
-        templateUrl: 'views/DetallePartidoOrigen.html',
-        controller: 'Nivel2Ctrl',
       })
-      .when('/About', {
-        templateUrl: 'views/About.html',
-        controller: 'AboutCtrl'
+      .state('partido', {
+        url:'/partido/:id',
+        templateUrl: 'views/partido.html',
+        controller: 'PorPartidoCtrl'
       })
-      .otherwise({
-        redirectTo: '/'
+      .state('origen', {
+        url:'origen/:id/:type',
+        templateUrl: 'views/origen.html',
+        controller: 'PorOrigenCtrl'
       });
   });

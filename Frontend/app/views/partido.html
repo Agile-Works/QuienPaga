@@ -4,9 +4,8 @@
   <div>
   <ul>
     <li ng-repeat="dato in result">
-      <a href="#/partido/{{dato.Label}}" ui-sref="partido({ id: dato.Label })">{{dato.Label}} {{dato.Monto}}</a>
+      <a href="#/origen/{{pcurrent}}/{{dato.Label}}" ui-sref="origen({id:pcurrent,type:dato.Label })">{{dato.Label}} {{dato.Monto}}</a>
     </li>
   </ul>
   </div>
 </div>
-

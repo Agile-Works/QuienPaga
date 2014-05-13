@@ -1,3 +1,11 @@
+/**
+ * @description Google Chart Api Directive Module for AngularJS
+ * @version 0.0.9
+ * @author Nicolas Bouillon <nicolas@bouil.org>
+ * @author GitHub contributors
+ * @license MIT
+ * @year 2013
+ */
 (function (document, window) {
     'use strict';
 
@@ -188,14 +196,13 @@
                                     console.log("Chart not displayed due to error: " + err.message + ". Full error object follows.");
                                     console.log(err);
                                 });
-                                google.visualization.events.addListener($scope.chartWrapper, 'select', function (event) {
+                                google.visualization.events.addListener($scope.chartWrapper, 'select', function () {
                                     var selectedItem = $scope.chartWrapper.getChart().getSelection()[0];
                                     if (selectedItem) {
                                         $scope.$apply(function () {
                                             $scope.select({selectedItem: selectedItem});
                                         });
                                     }
-                                   alert('chartSelect in ctrl, selection: '+selectedItem.text + ' Evt: ' + event);
                                 });
 
 
