@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('quienPagaApp')
-  .controller('MainCtrl', function ($scope,$http) {
+  .controller('MainCtrl', function ($scope,$http,$window) {
     $http.get('http://www.quienpaga.local/api/Main/Index')
       .success(function(response){
         var chartdata= [['Partido', 'Montos']];
@@ -16,7 +16,7 @@ angular.module('quienPagaApp')
         MainChart.methods={};
         MainChart.type = 'PieChart';
         MainChart.data=chartdata;
-        MainChart.options = {displayExactValues: true,width: 400,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
+        MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
         MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
         $scope.chart = MainChart;
       });
@@ -28,7 +28,9 @@ angular.module('quienPagaApp')
         });
     };
 
-    $scope.DataByPoliticalParty=function(name){
+    $scope.DataByPoliticalParty=function(){
+      var name='FA';
+      $window.alert('entra');
       $http.get('http://www.quienpaga.local/api/Main/RenderByOrigen?partido='+name)
         .success(function(data){
           $scope.result= data;

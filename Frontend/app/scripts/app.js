@@ -13,6 +13,9 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
+      }).when('/DataByPoliticalParty', {
+        templateUrl: 'views/DetallePartidoOrigen.html',
+        controller: 'Nivel2Ctrl',
       })
       .when('/About', {
         templateUrl: 'views/About.html',
