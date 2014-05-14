@@ -9,8 +9,9 @@ angular
     'googlechart'
   ])
   .config(function ($stateProvider,$urlRouterProvider) {
- //   $urlRouterProvider.otherwise('/home');
-  
+ 
+    $urlRouterProvider.otherwise('/home');
+
     $stateProvider
       .state('todos', {
         url:'/home',
@@ -23,7 +24,7 @@ angular
         controller: 'PorPartidoCtrl'
       })
       .state('origen', {
-        url:'origen/:id/:type',
+        url:'/origen/:id/:type',
         templateUrl: 'views/origen.html',
         controller: 'PorOrigenCtrl'
       });

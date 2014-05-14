@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('quienPagaApp')
-  .controller('MainCtrl', function ($scope,$http,$window,DataService) {
+  .controller('MainCtrl', function ($scope,$http,$window,DataService, $state) {
     DataService.GetAll().then(function(response){
       var chartdata= [['Partido', 'Montos']];
-      $scope.result=response;
       angular.forEach(response, function(value){
         var dato=angular.fromJson(value);
         var aux=[];
@@ -21,4 +20,9 @@ angular.module('quienPagaApp')
       MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
       $scope.chart = MainChart;
     });
+
+    $scope.onSelectRowFunction = function(selectedItem){
+      $state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
+    };
+
   });

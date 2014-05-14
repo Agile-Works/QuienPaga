@@ -1,12 +1,5 @@
 
 <div class="body">
-  <div google-chart chart="chart" style="padding:0;width:400px;margin:auto"></div>
-  <div>
-  <ul>
-    <li ng-repeat="dato in result">
-      <a href="#/partido/{{dato.Label}}" ui-sref="partido({ id: dato.Label })">{{dato.Label}} {{dato.Monto}}</a>
-    </li>
-  </ul>
-  </div>
+  <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" style="padding:0;width:400px;margin:auto"></div>
 </div>
 
