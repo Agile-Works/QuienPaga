@@ -19,6 +19,5 @@
       <file src="Global.asax.cs"/>
       <file src="*.aspx"/>
       <file src="*.cshtml"/>
-      <file src="app_online.htm"/>
   </files>
 </package>
