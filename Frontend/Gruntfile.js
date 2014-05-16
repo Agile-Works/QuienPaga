@@ -148,10 +148,6 @@ module.exports = function (grunt) {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
         ignorePath: '<%= yeoman.app %>/'
-      },
-      sass: {
-        src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        ignorePath: '<%= yeoman.app %>/bower_components/'
       }
     },
 
@@ -204,16 +200,7 @@ module.exports = function (grunt) {
     useminPrepare: {
       html: '<%= yeoman.app %>/index.html',
       options: {
-        dest: '<%= yeoman.dist %>',
-        flow: {
-          html: {
-            steps: {
-              js: ['concat', 'uglifyjs'],
-              css: ['cssmin']
-            },
-            post: {}
-          }
-        }
+        dest: '<%= yeoman.dist %>'
       }
     },
 
@@ -222,9 +209,10 @@ module.exports = function (grunt) {
         // custom options, see below
       },
       main: {
-        src: ['src/**/*.tpl.html'],
-        dest: 'tmp/templates.js'
-      },
+        src: ['views/*.html'],
+        base: 'views',
+        dest: 'dist/tmp'
+      }
     },
 
     // Performs rewrites based on rev and the useminPrepare configuration
@@ -316,6 +304,10 @@ module.exports = function (grunt) {
             '.htaccess',
             '*.html',
             'views/{,*/}*.html',
+            //'bower_components/**/*',
+            'bower_components/angular/*.{js,css}',
+            'bower_components/angular-ui-router/release/*.{js,css}',
+            'bower_components/angular-google-chart/*.{js,css}',
             'images/{,*/}*.{webp}',
             'fonts/*'
           ]
@@ -419,12 +411,12 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
-    //'concat',
+    'concat',
     'ngmin',
     'copy:dist',
     'cdnify',
     'cssmin',
-    //'uglify',
+    'uglify',
     'rev',
     'usemin',
     'htmlmin'
