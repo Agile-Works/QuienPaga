@@ -8,6 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BCB6FB
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileWorks.Logger", "AgileWorks.Logger\AgileWorks.Logger.csproj", "{7A10B045-BFBB-4951-AB1B-0F60B36161F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,10 @@ Global
 		{5D3275ED-3A54-42B6-AC31-2FFE933B243D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D3275ED-3A54-42B6-AC31-2FFE933B243D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D3275ED-3A54-42B6-AC31-2FFE933B243D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A10B045-BFBB-4951-AB1B-0F60B36161F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A10B045-BFBB-4951-AB1B-0F60B36161F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A10B045-BFBB-4951-AB1B-0F60B36161F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A10B045-BFBB-4951-AB1B-0F60B36161F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,10 @@
+C:\Code\AgileRes\bin\Logger\AgileWorks.Logger.dll
+C:\Code\AgileRes\bin\Logger\AgileWorks.Logger.pdb
+C:\Code\AgileRes\AgileRes.API\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.csprojResolveAssemblyReference.cache
+C:\Code\AgileRes\AgileRes.API\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.dll
+C:\Code\AgileRes\AgileRes.API\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.pdb
+C:\Code\QuienPaga\Backend\bin\Logger\AgileWorks.Logger.dll
+C:\Code\QuienPaga\Backend\bin\Logger\AgileWorks.Logger.pdb
+C:\Code\QuienPaga\Backend\QuienPagaWebApi\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.csprojResolveAssemblyReference.cache
+C:\Code\QuienPaga\Backend\QuienPagaWebApi\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.dll
+C:\Code\QuienPaga\Backend\QuienPagaWebApi\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.pdb

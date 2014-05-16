@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Http;
 using System.Web.Mvc;
+using AgileWorks.Logger;
 using QuienPaga.Api.Manager.Massive;
 using QuienPaga.Api.Model;
 using QuienPaga.Api.Repos;
@@ -21,6 +22,8 @@ namespace QuienPaga.Api
     {
         protected void Application_Start()
         {
+            LogUtils.Initialize();
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
             ObjectFactory.Configure(x => x.For<IRepository>().Singleton().Use<Repository>());
