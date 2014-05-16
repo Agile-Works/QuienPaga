@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>QuienPaga</id>
+    <version>1.0</version>
+    <authors>QuienPaga</authors>
+    <description>Angular Application</description>
+    <iconUrl>http://www.agileworks.com.uy/Portals/_AgileWorks/portalicon.ico</iconUrl>
+	<tags>Agileworks</tags>
+  </metadata>
+  <files>
+      <file src="bin\**" target="bin" exclude="**\.pdb"/>
+      <file src="App_Start\**" target="App_Start\" />
+      <file src="Content\**" target="Content\"/>  
+      <file src="Scripts\**" target="Scripts\"/>
+      <file src="Views\**" target="Views\"/>
+      <file src="*.config" />
+      <file src="Global.asax"/>
+      <file src="Global.asax.cs"/>
+      <file src="*.aspx"/>
+      <file src="*.cshtml"/>
+      <file src="app_online.htm"/>
+  </files>
+</package>
