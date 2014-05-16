@@ -217,6 +217,16 @@ module.exports = function (grunt) {
       }
     },
 
+    html2js: {
+      options: {
+        // custom options, see below
+      },
+      main: {
+        src: ['src/**/*.tpl.html'],
+        dest: 'tmp/templates.js'
+      },
+    },
+
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
@@ -399,8 +409,8 @@ module.exports = function (grunt) {
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'connect:test',
-    'karma'
+    'connect:test'//,
+    //'karma'
   ]);
 
   grunt.registerTask('build', [
@@ -409,12 +419,12 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
-    'concat',
+    //'concat',
     'ngmin',
     'copy:dist',
     'cdnify',
     'cssmin',
-    'uglify',
+    //'uglify',
     'rev',
     'usemin',
     'htmlmin'
@@ -422,7 +432,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
-    'test',
+    //'test',
     'build'
   ]);
 };
