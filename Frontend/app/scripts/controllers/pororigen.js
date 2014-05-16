@@ -6,7 +6,7 @@ angular.module('quienPagaApp')
     DataService.GetDetailForOrigin($stateParams.id,$stateParams.type).then(function(data){
       $scope.pcurrent=$stateParams.id;
       var chartdata= [['Donante','Montos',{role:'style'}, { role: 'annotation' } ]];
-      var datacolors=['#3366cc','#dc3912','#ff9900','#109618','#990099','#0099c6','#dd4477','#66aa00','#aaaa11','#316395'];
+      var datacolors=['#3366cc','#dc3912','#ff9900','#109618','#990099','#0099c6','#dd4477','#66aa00','#aaaa11','#316395','#22aa99'];
       angular.forEach(data, function(value, index){
         var dato=angular.fromJson(value);
         var aux=[];

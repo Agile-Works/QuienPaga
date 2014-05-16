@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -59,7 +60,7 @@ namespace QuienPaga.Api.Controllers
         }
 
         [HttpGet]
-        public JsonResult<IEnumerable<dynamic>> RenderByDetail(string partido, string origen)
+        public JsonResult<List<dynamic>> RenderByDetail(string partido, string origen)
         {
             //var data = _repo.GetDataFromCache();
             //var model = new List<dynamic>();
@@ -68,7 +69,16 @@ namespace QuienPaga.Api.Controllers
             //{
             //    model.Add(new { Detalle = detalle.First().DETALLE, Monto = detalle.Select(x => x.MONTO).Sum() });
             //}
-            return Json(_repo.GetDatabyDetail(partido,origen));
+
+            var list=_repo.GetDatabyDetail(partido, origen);
+            var resto = 0;
+            foreach (var d in list.Skip(10))
+            {
+                resto += d.Monto;
+            }
+            var model = list.Take(10).ToList();
+            model.Add(new {Label="Otros", Monto=resto });
+            return Json(model);
            
         }
 

@@ -67,7 +67,7 @@ namespace QuienPaga.Api.Repos
         {
             object[] parametros = { partido, origen };
 
-            return new QPFormulas().Query(@"SELECT Top 10 DETALLE as 'Label', SUM(Monto) as 'Monto'
+            return new QPFormulas().Query(@"SELECT DETALLE as 'Label', SUM(Monto) as 'Monto'
                                             FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
                                             WHERE partido=@0 and origen=@1
                                             GROUP BY DETALLE

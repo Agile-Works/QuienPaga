@@ -2,7 +2,8 @@
 
 angular.module('quienPagaApp')
   .service('DataService', function($http) {
-  var ApiUrl='http://sudestadaapi.agileworks.net/api/Main/';
+  var ApiUrl= 'http://www.quienpaga.local/api/Main/'; 
+  //'http://sudestadaapi.agileworks.net/api/Main/';
 
   this.GetAll = function() {
     return $http.get(ApiUrl + 'Index')
