@@ -6,12 +6,13 @@ angular.module('quienPagaApp')
     DataService.GetDetailForOrigin($stateParams.id,$stateParams.type).then(function(data){
       $scope.pcurrent=$stateParams.id;
       var chartdata= [['Donante','Montos',{role:'style'}, { role: 'annotation' } ]];
-      angular.forEach(data, function(value){
+      var datacolors=['#3366cc','#dc3912','#ff9900','#109618','#990099','#0099c6','#dd4477','#66aa00','#aaaa11','#316395'];
+      angular.forEach(data, function(value, index){
         var dato=angular.fromJson(value);
         var aux=[];
         aux.push(dato.Label);
         aux.push(dato.Monto);
-        aux.push('#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6));
+        aux.push(datacolors[index]);
         aux.push(dato.Label);
         this.push(aux);
       }, chartdata);
