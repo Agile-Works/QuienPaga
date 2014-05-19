@@ -10,14 +10,11 @@
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="styles/main.css">
  </head>
-  <body ng-app="quienPagaApp">
-    <div class="header">
-      <h3 class="text-muted"><a id="home" ng-href="#">QuienPaga</a></h3>
-    </div>
-
-
-    <div ui-view>
-    </div>
+  <body >
+    
+    <div ng-app="quienPagaApp">
+      <div ui-view>
+      </div>
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
@@ -36,25 +33,10 @@
     <script src="scripts/controllers/pororigen.js"></script>
     <script src="scripts/controllers/about.js"></script>
     <script src="scripts/services/data.js"></script>
+    <script src="views/templates.js"></script>
     <!-- endbuild -->
 
-    <script id="views/main.html" type="text/ng-template">
-      <div class="body">
-        <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" style="padding:0;width:400px;margin:auto"></div>
-      </div>
-    </script>
-
-    <script id="views/origen.html" type="text/ng-template">
-      <div class="body">
-        <div google-chart chart="chart" style="padding:0;width:900px;margin:auto"></div>
-      </div>
-    </script>
-
-    <script id="views/partido.html" type="text/ng-template">
-      <div class="body">
-        <div google-chart="" chart="chart" select="onSelectRowFunction(selectedItem, pcurrent.name)" style="padding:0;width:400px;margin:auto"></div>
-      </div>
-    </script>
+    </div>
 
 </body>
 </html>

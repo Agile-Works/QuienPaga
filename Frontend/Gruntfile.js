@@ -57,7 +57,8 @@ module.exports = function (grunt) {
           '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ]
+        ],
+        tasks: ['html2js']
       }
     },
 
@@ -206,12 +207,11 @@ module.exports = function (grunt) {
 
     html2js: {
       options: {
-        // custom options, see below
+        base: '<%= yeoman.app %>'
       },
       main: {
-        src: ['views/*.html'],
-        base: 'views',
-        dest: 'dist/tmp'
+        src: ['<%= yeoman.app %>/views/*.html'],
+        dest: '<%= yeoman.app %>/views/templates.js'
       }
     },
 
@@ -264,7 +264,8 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
+          //src: ['*.html', 'views/{,*/}*.html'],
+          src: ['*.html'],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -385,6 +386,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'bowerInstall',
+      'html2js',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -408,6 +410,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'bowerInstall',
+    'html2js',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',

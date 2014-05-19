@@ -2,9 +2,7 @@
 
 angular
   .module('quienPagaApp', [
-    //'ngCookies',
-    //'ngResource',
-    //'ngSanitize',
+    'templates-main',
     'ui.router',
     'googlechart'
   ])
