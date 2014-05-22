@@ -25,5 +25,10 @@ angular
         url:'/origen/:id/:type',
         templateUrl: 'views/origen.html',
         controller: 'PorOrigenCtrl'
+      })
+      .state('contribuyente', {
+        url:'/contribuyente/:nombre',
+        templateUrl: 'views/contribuyente.html',
+        controller: 'PorContribuyenteCtrl'
       });
   });

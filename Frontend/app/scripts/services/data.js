@@ -2,7 +2,7 @@
 
 angular.module('quienPagaApp')
   .service('DataService', function($http) {
-  var ApiUrl= 'http://sudestadaapi.agileworks.net/api/Main/';
+  var ApiUrl='http://www.quienpaga.local/api/Main/';  //'http://sudestadaapi.agileworks.net/api/Main/';
 
   this.GetAll = function() {
     return $http.get(ApiUrl + 'Index')
@@ -25,4 +25,10 @@ angular.module('quienPagaApp')
       });
   };
 
+  this.GetDetailForContributor= function(contribuyente) {
+    return $http.get(ApiUrl + 'RenderByPerson?person='+contribuyente)
+      .then(function(response){
+        return response.data;
+      });
+  };
 });
