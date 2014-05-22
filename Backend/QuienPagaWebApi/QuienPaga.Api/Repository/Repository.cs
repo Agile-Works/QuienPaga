@@ -57,6 +57,10 @@ namespace QuienPaga.Api.Repos
 
         public IEnumerable<dynamic> GetDatabyPoliticalSector(string partido, string sector)
         {
+            partido = partido.Replace("\"", "");
+            sector = sector.Replace("\"", "");
+
+
             return new QPFormulas().Query(@"SELECT Detalle as 'Label', SUM(Monto) as 'Monto'
                                                 FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
                                                 Where Partido like @0
@@ -65,6 +69,9 @@ namespace QuienPaga.Api.Repos
 
         public IEnumerable<dynamic> GetDatabyDetail(string partido, string origen)
         {
+            partido = partido.Replace("\"", "");
+            origen = origen.Replace("\"", "");
+
             object[] parametros = { partido, origen };
 
             return new QPFormulas().Query(@"SELECT DETALLE as 'Label', SUM(Monto) as 'Monto'
@@ -76,11 +83,18 @@ namespace QuienPaga.Api.Repos
 
         public IEnumerable<dynamic> GetDatabyContributor(string person)
         {
+            person= person.Replace("\"", "");
             return new QPFormulas().Query(@"SELECT PARTIDO as 'Label', SUM(Monto) as 'Monto'
                                             FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
                                             WHERE LOWER(DETALLE) = @0
                                             GROUP BY detalle, PARTIDO", person.ToLower());
         }
 
+        public IEnumerable<dynamic> GetAllContributors()
+        {
+            return new QPFormulas().Query(@"SELECT Distinct([DETALLE])
+                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]");
+            
+        }
     }
 }

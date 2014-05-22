@@ -4,11 +4,14 @@ angular.module("views/contribuyente.html", []).run(["$templateCache", function($
   $templateCache.put("views/contribuyente.html",
     "<div class=\"body\">\n" +
     "  <div id=\"search\" style=\"width:400px; float:right\">\n" +
-    "    <input type=\"text\" ng-model=\"pdontante.nombre\" size=\"40\" ng-value=\"nombre\" name=\"pdonante\"\n" +
-    "             placeholder=\"Ingrese el nombre que desee buscar\">\n" +
-    "    <a href=\"#/contribuyente/{{pdontante.nombre}}\" >Enviar</a>\n" +
+    "    <select ui-select2=\"\" ng-model=\"SelectedName\" data-placeholder=\"Buscar...\" style=\"width:200px\">\n" +
+    "      <option></option>\n" +
+    "      <option ng-repeat=\"item in ListOfNamesModel\" value=\"{{item.DETALLE}}\">{{item.DETALLE}}</option>\n" +
+    "    </select>\n" +
+    "    <a href=\"#/contribuyente/{{(SelectedName|json)}}\" style=\"btn btn-primary\" >Enviar</a>\n" +
     "  </div>\n" +
-    "  </br></br>\n" +
+    "  </br>\n" +
+    "  <span>Donaciones realizadas por {{pdonante.nombre.replace('\"','').replace('\"','') }}</span>\n" +
     "  <div google-chart chart=\"chart\" style=\"padding:0;width:900px;margin:auto\"></div>\n" +
     "</div>\n" +
     "");

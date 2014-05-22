@@ -4,7 +4,8 @@ angular
   .module('quienPagaApp', [
     'templates-main',
     'ui.router',
-    'googlechart'
+    'googlechart',
+    'ui.select2'
   ])
   .config(function ($stateProvider,$urlRouterProvider) {
  
@@ -32,3 +33,7 @@ angular
         controller: 'PorContribuyenteCtrl'
       });
   });
+
+angular.module('quienPagaApp').run(['uiSelect2Config', function(uiSelect2Config) {
+  uiSelect2Config.placeholder = 'Placeholder text';
+}]);

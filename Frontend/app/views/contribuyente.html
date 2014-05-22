@@ -1,10 +1,13 @@
 
 <div class="body">
   <div id="search" style="width:400px; float:right">
-    <input type="text" ng-model="pdontante.nombre" size="40" ng-value="nombre" name="pdonante"
-             placeholder="Ingrese el nombre que desee buscar">
-    <a href="#/contribuyente/{{pdontante.nombre}}" >Enviar</a>
+    <select ui-select2="" ng-model="SelectedName" data-placeholder="Buscar..." style="width:200px">
+      <option></option>
+      <option ng-repeat="item in ListOfNamesModel" value="{{item.DETALLE}}">{{item.DETALLE}}</option>
+    </select>
+    <a href="#/contribuyente/{{(SelectedName|json)}}" style="btn btn-primary" >Enviar</a>
   </div>
-  </br></br>
+  </br>
+  <span>Donaciones realizadas por {{pdonante.nombre.replace('"','').replace('"','') }}</span>
   <div google-chart chart="chart" style="padding:0;width:900px;margin:auto"></div>
 </div>

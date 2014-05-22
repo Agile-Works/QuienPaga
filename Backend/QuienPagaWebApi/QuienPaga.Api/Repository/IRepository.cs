@@ -15,6 +15,6 @@ namespace QuienPaga.Api.Repos
         IEnumerable<dynamic> GetDatabyPoliticalSector(string partido, string sector);
         IEnumerable<dynamic> GetDatabyDetail(string partido, string origen);
         IEnumerable<dynamic> GetDatabyContributor(string person);
-        
+        IEnumerable<dynamic> GetAllContributors();
     }
 }

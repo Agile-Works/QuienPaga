@@ -3,6 +3,7 @@
 angular.module('quienPagaApp')
   .service('DataService', function($http) {
   var ApiUrl='http://www.quienpaga.local/api/Main/';  //'http://sudestadaapi.agileworks.net/api/Main/';
+  var select2Data=[];
 
   this.GetAll = function() {
     return $http.get(ApiUrl + 'Index')
@@ -31,4 +32,16 @@ angular.module('quienPagaApp')
         return response.data;
       });
   };
+
+  this.GetSelect2Data=function(){
+    if (select2Data.length === 0){
+      return $http.get(ApiUrl + 'RenderContributors')
+        .then(function(response){
+          return response.data;
+        });
+    }else{
+      return select2Data;
+    }
+  };
+  
 });

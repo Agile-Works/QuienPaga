@@ -3,6 +3,11 @@
 angular.module('quienPagaApp')
   .controller('PorContribuyenteCtrl', function ($scope,$http,$stateParams,DataService) {
     if ($stateParams.nombre !== 'Otros'){
+      DataService.GetSelect2Data().then(function(data){
+        $scope.ListOfNamesModel = data;
+        $scope.List = data;
+      });
+
       DataService.GetDetailForContributor($stateParams.nombre).then(function(data){
         $scope.pcurrent=$stateParams.id;
         $scope.pdonante={nombre :  $stateParams.nombre};
