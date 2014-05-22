@@ -78,8 +78,9 @@ namespace QuienPaga.Api.Repos
         {
             return new QPFormulas().Query(@"SELECT PARTIDO as 'Label', SUM(Monto) as 'Monto'
                                             FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
-                                            WHERE DETALLE = @0
-                                            GROUP BY PARTIDO", person);
+                                            WHERE LOWER(DETALLE) = @0
+                                            GROUP BY detalle, PARTIDO", person.ToLower());
         }
+
     }
 }
