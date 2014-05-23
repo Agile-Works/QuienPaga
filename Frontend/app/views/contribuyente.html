@@ -7,9 +7,9 @@
         <option ng-repeat="item in ListOfNamesModel" value="{{item.DETALLE}}">{{item.DETALLE}}</option>
       </select>
       &nbsp; &nbsp;
-      <a href="#/contribuyente/{{(SelectedName|json)}}" role="button"   class="btn btn-default btn-sm "  style="background-color: #EBEBEB">Enviar</a>
+      <a ng-click="goToContribuyente(SelectedName)" class="btn btn-default btn-sm" style="background-color: #EBEBEB">Enviar</a>
     </div>
-    <div class="col-md-4 col-md-offset-4">Donaciones realizadas por <strong>{{pdonante.nombre.replace('"','').replace('"','') }}</strong></div>
+    <div class="col-md-4 col-md-offset-4">{{mensaje}} <strong>{{pdonante.nombre.replace('"','').replace('"','') }}</strong></div>
     <div class="col-md-4"></div>
     <div google-chart chart="chart" class="col-md-12 grafica"></div>
   </div>

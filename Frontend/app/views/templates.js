@@ -10,9 +10,9 @@ angular.module("views/contribuyente.html", []).run(["$templateCache", function($
     "        <option ng-repeat=\"item in ListOfNamesModel\" value=\"{{item.DETALLE}}\">{{item.DETALLE}}</option>\n" +
     "      </select>\n" +
     "      &nbsp; &nbsp;\n" +
-    "      <a href=\"#/contribuyente/{{(SelectedName|json)}}\" role=\"button\"   class=\"btn btn-default btn-sm \"  style=\"background-color: #EBEBEB\">Enviar</a>\n" +
+    "      <a ng-click=\"goToContribuyente(SelectedName)\" class=\"btn btn-default btn-sm\" style=\"background-color: #EBEBEB\">Enviar</a>\n" +
     "    </div>\n" +
-    "    <div class=\"col-md-4 col-md-offset-4\">Donaciones realizadas por <strong>{{pdonante.nombre.replace('\"','').replace('\"','') }}</strong></div>\n" +
+    "    <div class=\"col-md-4 col-md-offset-4\">{{mensaje}} <strong>{{pdonante.nombre.replace('\"','').replace('\"','') }}</strong></div>\n" +
     "    <div class=\"col-md-4\"></div>\n" +
     "    <div google-chart chart=\"chart\" class=\"col-md-12 grafica\"></div>\n" +
     "  </div>\n" +

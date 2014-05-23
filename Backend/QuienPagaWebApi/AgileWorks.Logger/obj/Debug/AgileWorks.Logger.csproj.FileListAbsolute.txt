@@ -8,3 +8,8 @@ C:\Code\QuienPaga\Backend\bin\Logger\AgileWorks.Logger.pdb
 C:\Code\QuienPaga\Backend\QuienPagaWebApi\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.csprojResolveAssemblyReference.cache
 C:\Code\QuienPaga\Backend\QuienPagaWebApi\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.dll
 C:\Code\QuienPaga\Backend\QuienPagaWebApi\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.pdb
+C:\code\QuienPaga\QuienPaga\Backend\bin\Logger\AgileWorks.Logger.dll
+C:\code\QuienPaga\QuienPaga\Backend\bin\Logger\AgileWorks.Logger.pdb
+C:\code\QuienPaga\QuienPaga\Backend\QuienPagaWebApi\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.csprojResolveAssemblyReference.cache
+C:\code\QuienPaga\QuienPaga\Backend\QuienPagaWebApi\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.dll
+C:\code\QuienPaga\QuienPaga\Backend\QuienPagaWebApi\AgileWorks.Logger\obj\Debug\AgileWorks.Logger.pdb
