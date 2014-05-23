@@ -2,19 +2,21 @@ angular.module('templates-main', ['views/contribuyente.html', 'views/main.html',
 
 angular.module("views/contribuyente.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("views/contribuyente.html",
-    "<div class=\"body\">\n" +
-    "  <div id=\"search\" style=\"width:400px; float:right\">\n" +
-    "    <select ui-select2=\"\" ng-model=\"SelectedName\" data-placeholder=\"Buscar...\" style=\"width:200px\">\n" +
-    "      <option></option>\n" +
-    "      <option ng-repeat=\"item in ListOfNamesModel\" value=\"{{item.DETALLE}}\">{{item.DETALLE}}</option>\n" +
-    "    </select>\n" +
-    "    <a href=\"#/contribuyente/{{(SelectedName|json)}}\" style=\"btn btn-primary\" >Enviar</a>\n" +
+    "<div class=\"container-fluid\">\n" +
+    "  <div class=\"body row\">\n" +
+    "    <div id=\"search\"  class=\"col-md-4 col-md-offset-8\">\n" +
+    "      <select ui-select2=\"\" ng-model=\"SelectedName\" data-placeholder=\"Buscar...\" style=\"width:200px\">\n" +
+    "        <option></option>\n" +
+    "        <option ng-repeat=\"item in ListOfNamesModel\" value=\"{{item.DETALLE}}\">{{item.DETALLE}}</option>\n" +
+    "      </select>\n" +
+    "      &nbsp; &nbsp;\n" +
+    "      <a href=\"#/contribuyente/{{(SelectedName|json)}}\" role=\"button\"   class=\"btn btn-default btn-sm \"  style=\"background-color: #EBEBEB\">Enviar</a>\n" +
+    "    </div>\n" +
+    "    <div class=\"col-md-4 col-md-offset-4\">Donaciones realizadas por <strong>{{pdonante.nombre.replace('\"','').replace('\"','') }}</strong></div>\n" +
+    "    <div class=\"col-md-4\"></div>\n" +
+    "    <div google-chart chart=\"chart\" class=\"col-md-12 grafica\"></div>\n" +
     "  </div>\n" +
-    "  </br>\n" +
-    "  <span>Donaciones realizadas por {{pdonante.nombre.replace('\"','').replace('\"','') }}</span>\n" +
-    "  <div google-chart chart=\"chart\" style=\"padding:0;width:900px;margin:auto\"></div>\n" +
-    "</div>\n" +
-    "");
+    "</div>");
 }]);
 
 angular.module("views/main.html", []).run(["$templateCache", function($templateCache) {

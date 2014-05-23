@@ -1,13 +1,16 @@
 
-<div class="body">
-  <div id="search" style="width:400px; float:right">
-    <select ui-select2="" ng-model="SelectedName" data-placeholder="Buscar..." style="width:200px">
-      <option></option>
-      <option ng-repeat="item in ListOfNamesModel" value="{{item.DETALLE}}">{{item.DETALLE}}</option>
-    </select>
-    <a href="#/contribuyente/{{(SelectedName|json)}}" style="btn btn-primary" >Enviar</a>
+<div class="container-fluid">
+  <div class="body row">
+    <div id="search"  class="col-md-4 col-md-offset-8">
+      <select ui-select2="" ng-model="SelectedName" data-placeholder="Buscar..." style="width:200px">
+        <option></option>
+        <option ng-repeat="item in ListOfNamesModel" value="{{item.DETALLE}}">{{item.DETALLE}}</option>
+      </select>
+      &nbsp; &nbsp;
+      <a href="#/contribuyente/{{(SelectedName|json)}}" role="button"   class="btn btn-default btn-sm "  style="background-color: #EBEBEB">Enviar</a>
+    </div>
+    <div class="col-md-4 col-md-offset-4">Donaciones realizadas por <strong>{{pdonante.nombre.replace('"','').replace('"','') }}</strong></div>
+    <div class="col-md-4"></div>
+    <div google-chart chart="chart" class="col-md-12 grafica"></div>
   </div>
-  </br>
-  <span>Donaciones realizadas por {{pdonante.nombre.replace('"','').replace('"','') }}</span>
-  <div google-chart chart="chart" style="padding:0;width:900px;margin:auto"></div>
 </div>
