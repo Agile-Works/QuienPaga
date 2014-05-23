@@ -22,7 +22,7 @@ angular.module("views/contribuyente.html", []).run(["$templateCache", function($
 angular.module("views/main.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("views/main.html",
     "<div class=\"body\">\n" +
-    "  <div google-chart chart=\"chart\" select=\"onSelectRowFunction(selectedItem)\" style=\"padding:0;width:400px;margin:auto\"></div>\n" +
+    "  <div google-chart chart=\"chart\" select=\"onSelectRowFunction(selectedItem)\" class=\"grafica\" style=\"padding:0;width:400px;margin:auto\"></div>\n" +
     "</div>\n" +
     "\n" +
     "");
@@ -31,7 +31,7 @@ angular.module("views/main.html", []).run(["$templateCache", function($templateC
 angular.module("views/origen.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("views/origen.html",
     "<div class=\"body\">\n" +
-    "  <div google-chart chart=\"chart\" select=\"onSelectRowFunction(selectedItem)\" style=\"padding:0;width:900px;margin:auto\"></div>\n" +
+    "  <div google-chart chart=\"chart\" select=\"onSelectRowFunction(selectedItem)\" class=\"grafica\" style=\"padding:0;width:900px;margin:auto\"></div>\n" +
     "</div>\n" +
     "\n" +
     "");
