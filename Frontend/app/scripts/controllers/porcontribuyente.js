@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('quienPagaApp')
-  .controller('PorContribuyenteCtrl', function ($scope,$http,$stateParams,DataService,$location) {
+  .controller('PorContribuyenteCtrl', function ($scope,$http,$stateParams,DataService,$state) {
     DataService.GetSelect2Data().then(function(data){
       $scope.ListOfNamesModel = data;
     });
@@ -30,28 +30,18 @@ angular.module('quienPagaApp')
         MainChart.options = {title: 'Donaciones de ' + $stateParams.nombre ,displayExactValues: true,width: 600,height: 200,chartArea: {left:10,top:10,bottom:0,height:'80%'},legend: 'none'};
         MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
         $scope.chart = MainChart;
-        
+
       });
     }else{
       $scope.mensaje = 'Ingrese el nombre que desea consultar en el buscador';
     }
 
-    $scope.onSelectRowFunction = function(){
-      //$state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
-    };
 
-    $scope.goToContribuyente = function (SelectedName) {
-      if (event){
-        event.preventDefault();
+    $scope.$watch('SelectedName',function(newVal,oldVal){
+      if (newVal !== '' && newVal !== oldVal){
+        console.log('El nuevo valor es: ' + newVal);
+        $state.go('contribuyente',{nombre:newVal});
       }
-
-      console.log(SelectedName);
-
-      if (SelectedName !== '') {
-        $location.path('/contribuyente/'+SelectedName);
-      } else {
-        return false;
-      }
-    };
+    });
 
   });
