@@ -2,12 +2,12 @@
 <div class="container" style="margin:auto;">
   <div class="body" style="margin:auto;">
     <div id="search" style="position:absolute;right:15px;">
+      Donaciones de &nbsp;
       <select ui-select2="" ng-model="SelectedName" data-placeholder="Buscar..." style="width:300px">
         <option></option>
         <option ng-repeat="item in ListOfNamesModel" value="{{item.DETALLE}}">{{item.DETALLE}}</option>
       </select>
     </div>
-    <div style="margin:auto;width:400px">{{mensaje}}</div>
     <br/><br/>
     <br/><br/>
     <div google-chart chart="chart" style="padding:0;width:550px;margin:auto"></div>

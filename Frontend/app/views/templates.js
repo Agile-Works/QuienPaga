@@ -5,12 +5,12 @@ angular.module("views/contribuyente.html", []).run(["$templateCache", function($
     "<div class=\"container\" style=\"margin:auto;\">\n" +
     "  <div class=\"body\" style=\"margin:auto;\">\n" +
     "    <div id=\"search\" style=\"position:absolute;right:15px;\">\n" +
+    "      Donaciones de &nbsp;\n" +
     "      <select ui-select2=\"\" ng-model=\"SelectedName\" data-placeholder=\"Buscar...\" style=\"width:300px\">\n" +
     "        <option></option>\n" +
     "        <option ng-repeat=\"item in ListOfNamesModel\" value=\"{{item.DETALLE}}\">{{item.DETALLE}}</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
-    "    <div style=\"margin:auto;width:400px\">{{mensaje}}</div>\n" +
     "    <br/><br/>\n" +
     "    <br/><br/>\n" +
     "    <div google-chart chart=\"chart\" style=\"padding:0;width:550px;margin:auto\"></div>\n" +
