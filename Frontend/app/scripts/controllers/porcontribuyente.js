@@ -7,7 +7,7 @@ angular.module('quienPagaApp')
     });
 
     if ($stateParams.nombre !== 'Otros'){
-      $scope.mensaje= 'Donnaciones realiazadas por ';
+      $scope.SelectedName=[$stateParams.nombre];
       DataService.GetDetailForContributor($stateParams.nombre).then(function(data){
         $scope.pcurrent=$stateParams.id;
         $scope.pdonante={nombre :  $stateParams.nombre};
@@ -30,12 +30,8 @@ angular.module('quienPagaApp')
         MainChart.options = {title: 'Donaciones de ' + $stateParams.nombre ,displayExactValues: true,width: 600,height: 200,chartArea: {left:10,top:10,bottom:0,height:'80%'},legend: 'none'};
         MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
         $scope.chart = MainChart;
-
       });
-    }else{
-      $scope.mensaje = 'Ingrese el nombre que desea consultar en el buscador';
     }
-
 
     $scope.$watch('SelectedName',function(newVal,oldVal){
       if (newVal !== '' && newVal !== oldVal){

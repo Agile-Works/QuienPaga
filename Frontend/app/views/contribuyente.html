@@ -7,8 +7,9 @@
         <option ng-repeat="item in ListOfNamesModel" value="{{item.DETALLE}}">{{item.DETALLE}}</option>
       </select>
     </div>
-    <div style="margin:auto;">{{mensaje}} <strong>{{pdonante.nombre.replace('"','').replace('"','') }}</strong></div>
-    <div class="col-md-4"></div>
-    <div google-chart chart="chart" class="col-md-12 grafica"></div>
+    <div style="margin:auto;width:400px">{{mensaje}}</div>
+    <br/><br/>
+    <br/><br/>
+    <div google-chart chart="chart" style="padding:0;width:550px;margin:auto"></div>
   </div>
 </div>

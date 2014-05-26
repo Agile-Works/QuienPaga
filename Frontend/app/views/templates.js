@@ -10,9 +10,10 @@ angular.module("views/contribuyente.html", []).run(["$templateCache", function($
     "        <option ng-repeat=\"item in ListOfNamesModel\" value=\"{{item.DETALLE}}\">{{item.DETALLE}}</option>\n" +
     "      </select>\n" +
     "    </div>\n" +
-    "    <div style=\"margin:auto;\">{{mensaje}} <strong>{{pdonante.nombre.replace('\"','').replace('\"','') }}</strong></div>\n" +
-    "    <div class=\"col-md-4\"></div>\n" +
-    "    <div google-chart chart=\"chart\" class=\"col-md-12 grafica\"></div>\n" +
+    "    <div style=\"margin:auto;width:400px\">{{mensaje}}</div>\n" +
+    "    <br/><br/>\n" +
+    "    <br/><br/>\n" +
+    "    <div google-chart chart=\"chart\" style=\"padding:0;width:550px;margin:auto\"></div>\n" +
     "  </div>\n" +
     "</div>");
 }]);
