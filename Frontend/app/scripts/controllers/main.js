@@ -2,6 +2,7 @@
 
 angular.module('quienPagaApp')
   .controller('MainCtrl', function ($scope,$http,$window,DataService, $state) {
+    $scope.displayGif=true;
     DataService.GetAll().then(function(response){
       var chartdata= [['Partido', 'Montos']];
       angular.forEach(response, function(value){
@@ -19,6 +20,8 @@ angular.module('quienPagaApp')
       MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
       MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
       $scope.chart = MainChart;
+      $scope.displayGif=false;
+      console.log($scope.displayGif);
     });
 
     $scope.onSelectRowFunction = function(selectedItem){

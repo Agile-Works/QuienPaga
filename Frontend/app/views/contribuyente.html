@@ -1,7 +1,7 @@
 
 <div class="container" style="margin:auto;">
   <div class="body" style="margin:auto;">
-    <div id="search" style="position:absolute;right:15px;">
+    <div id="search" style="margin-left: 220px">
       Donaciones de &nbsp;
       <select ui-select2="" ng-model="SelectedName" data-placeholder="Buscar..." style="width:300px">
         <option></option>
@@ -10,6 +10,7 @@
     </div>
     <br/><br/>
     <br/><br/>
+    <p ng-show="displayGif" style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>
     <div google-chart chart="chart" style="padding:0;width:550px;margin:auto"></div>
   </div>
 </div>
