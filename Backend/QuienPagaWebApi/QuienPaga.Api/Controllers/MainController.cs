@@ -102,5 +102,11 @@ namespace QuienPaga.Api.Controllers
             return Json(_repo.GetAllContributors());
         }
 
+        [HttpGet]
+        public JsonResult<IEnumerable<dynamic>> GetAll()
+        {
+            return Json(_repo.GetAll());
+        }
+
     }
 }

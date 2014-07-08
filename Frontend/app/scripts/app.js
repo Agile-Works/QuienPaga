@@ -5,7 +5,7 @@ angular
     'templates-main',
     'ui.router',
     'googlechart',
-    'ui.select2'
+    'ui.select2',
   ])
   .config(function ($stateProvider,$urlRouterProvider) {
  

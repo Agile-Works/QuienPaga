@@ -28,7 +28,7 @@ angular.module('quienPagaApp')
         MainChart.displayed = 'true';
         MainChart.data=chartdata;
         MainChart.options = {title: 'Donaciones de ' + $stateParams.nombre ,displayExactValues: true,width: 600,height: 200,chartArea: {left:10,top:10,bottom:0,height:'80%'},legend: 'none'};
-        MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
+        MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #'}]};
         $scope.chart = MainChart;
       });
     }

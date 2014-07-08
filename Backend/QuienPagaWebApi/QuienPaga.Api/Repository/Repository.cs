@@ -35,22 +35,23 @@ namespace QuienPaga.Api.Repos
         public IEnumerable<dynamic> GetMainData()
         {
            return new QPFormulas().Query(@"SELECT Partido as 'Label', SUM(Monto) as 'Monto'
-                                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
-                                                Group by PARTIDO"); 
+                                                FROM [QuienPaga].[dbo].[QP_Ingresos]
+                                                Group by PARTIDO 
+                                                Order by Partido asc"); 
         }
 
         public IEnumerable<dynamic> GetSectorbyPoliticalParty(string partido)
         {
             return new QPFormulas().Query(@"SELECT Sector as 'Label', SUM(Monto) as 'Monto'
-                                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+                                                FROM [QuienPaga].[dbo].[QP_Ingresos]
                                                 Where Partido like @0
-                                                Group by Sector",partido); 
+                                                Group by Sector", partido); 
         }
 
         public IEnumerable<dynamic> GetOriginbyPoliticalParty(string partido)
         {
             return new QPFormulas().Query(@"SELECT ORIGEN as 'Label', SUM(Monto) as 'Monto'
-                                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+                                                FROM [QuienPaga].[dbo].[QP_Ingresos]
                                                 Where Partido like @0
                                                 Group by ORIGEN", partido);
         }
@@ -61,8 +62,8 @@ namespace QuienPaga.Api.Repos
             sector = sector.Replace("\"", "");
 
 
-            return new QPFormulas().Query(@"SELECT Detalle as 'Label', SUM(Monto) as 'Monto'
-                                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+            return new QPFormulas().Query(@"SELECT DONANTE as 'Label', SUM(Monto) as 'Monto'
+                                                FROM [QuienPaga].[dbo].[QP_Ingresos]
                                                 Where Partido like @0
                                                 Group by Sector", partido); 
         }
@@ -74,27 +75,40 @@ namespace QuienPaga.Api.Repos
 
             object[] parametros = { partido, origen };
 
-            return new QPFormulas().Query(@"SELECT DETALLE as 'Label', SUM(Monto) as 'Monto'
-                                            FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
+            return new QPFormulas().Query(@"SELECT DONANTE as 'Label', SUM(Monto) as 'Monto'
+                                            FROM [QuienPaga].[dbo].[QP_Ingresos]
                                             WHERE partido=@0 and origen=@1
-                                            GROUP BY DETALLE
-                                            ORDER BY Monto desc ",parametros);
+                                            GROUP BY DONANTE
+                                            ORDER BY Monto desc ", parametros);
         }
 
         public IEnumerable<dynamic> GetDatabyContributor(string person)
         {
             person= person.Replace("\"", "");
             return new QPFormulas().Query(@"SELECT PARTIDO as 'Label', SUM(Monto) as 'Monto'
-                                            FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]
-                                            WHERE LOWER(DETALLE) = @0
-                                            GROUP BY detalle, PARTIDO", person.ToLower());
+                                            FROM [QuienPaga].[dbo].[QP_Ingresos]
+                                            WHERE LOWER(DONANTE) = @0
+                                            GROUP BY Donante, PARTIDO", person.ToLower());
         }
 
         public IEnumerable<dynamic> GetAllContributors()
         {
-            return new QPFormulas().Query(@"SELECT Distinct([DETALLE])
-                                FROM [QuienPaga].[dbo].[QP_INGRESOS_FORMULAS]");
+            return new QPFormulas().Query(@"SELECT Distinct([DONANTE])
+                                FROM [QuienPaga].[dbo].[QP_Ingresos]");
             
+        }
+
+        public IEnumerable<dynamic> GetAll()
+        {
+            return new QPFormulas().Query(@"SELECT Partido, 
+                                                   Sector,
+                                                   Jurisdiccion,
+                                                   Origen, 
+                                                   Concepto,
+                                                   Donante,
+                                                   Monto
+                                                   From [QuienPaga].[dbo].[QP_Ingresos]
+                                                   Order by Partido, Sector");
         }
     }
 }

@@ -1,6 +1,34 @@
 
 <div class="body">
   <p ng-show="displayGif" style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>
-  <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="padding:0;width:400px;margin:auto"></div>
+<div id="subHeader">
+  <div id="search" style="margin:auto;width:895px;height:50px">
+    <select ui-select2="" ng-model="SelectedName" data-placeholder="Partidos o Sectores..." style="width:280px">
+      <option></option>
+      <option ng-repeat="item in Selectores.partidosector" value="{{item.name}}" partido="{{item.isPartido}}">{{item.name}}</option>
+    </select>
+     <select ui-select2="" ng-model="SelectedName" data-placeholder="Jurisdicción..." style="width:150px">
+      <option></option>
+      <option ng-repeat="item in Selectores.jurisdiccion" value="{{item}}">{{item}}</option>
+    </select>
+     <select ui-select2="" ng-model="SelectedName" data-placeholder="Origen o Concepto..." style="width:240px">
+      <option></option>
+      <option ng-repeat="item in Selectores.origenconcepto" value="{{item.name}}" origen="{{item.isOrigen}}">{{item.name}}</option>
+    </select>
+     <select ui-select2="" ng-model="SelectedName" data-placeholder="Donante..." style="width:210px">
+      <option></option>
+      <option ng-repeat="item in Selectores.donante | groupBy:'name'" value="{{item}}">{{item}}</option>
+    </select>
+  </div>
+</div>
+<div id="subBody" style="float:right;margin-top:40px;width: 1024px;">
+  <div id="left" style="width:300px !important;display:inline-block;">
+   &nbsp;&nbsp;&nbsp;
+  </div>  
+  <div id="right" style="width: 600px;display:inline-block; margin:auto;">  
+    <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="padding:0;width:400px;margin:auto"></div>
+    <div>
+  </div>  
+</div>
 </div>
 
