@@ -1,18 +1,76 @@
 'use strict';
 
 angular.module('quienPagaApp')
-  .controller('MainCtrl', function ($scope,$http,$window,DataService, $state,$filter) {
-    $scope.displayGif=true;
+  .controller('MainCtrl', function ($scope,$http,$window,DataService,$stateParams, $state,$filter) {
 
-    DataService.GetAll().then(function(response){
+
+    //Filtro
+    var filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
+    if (angular.isDefined($stateParams.search) && $stateParams.search !==''){
+      angular.forEach($stateParams.search.split('&'), function(value){
+        var param= value.$stateParams.search('=');
+        switch(angular.lowercase(param[0])) {
+          case 'partido':
+            filtro.partido=param[1];
+            break;
+          case 'sector':
+            filtro.sector=param[1];
+            break;
+          case 'concepto':
+            filtro.concepto=param[1];
+            break;
+          case 'origen':
+            filtro.origen=param[1];
+            break;
+          case 'jurisdiccion':
+            filtro.jurisdiccion=param[1];
+            break;
+          case 'donante':
+            filtro.donante=param[1];
+            break;
+          case 'agruparpor':
+            filtro.agruparpor=param[1];
+        }
+      });
+    }
+
+
+
+    $scope.displayGif=true;
+    DataService.GetAll(filtro).then(function(response){
       var chartdata=[['Partido','Montos']];
-      angular.forEach($filter('groupBy')(response,'Partido'), function(value){
+      angular.forEach($filter('groupBy')(response,filtro.agruparpor), function(value){
         var sum= 0;
-        angular.forEach($filter('filter')(response,{'Partido':value}), function(value2){
-          sum+=value2.Monto;
-        });
+        switch(angular.lowercase(filtro.agruparpor)){
+          case 'partido':
+            angular.forEach($filter('filter')(response,{'Partido':value.Partido}), function(value2){
+              sum+=value2.Monto;
+            });
+            break;
+          case 'sector':
+            angular.forEach($filter('filter')(response,{'Sector':value.Sector}), function(value2){
+              sum+=value2.Monto;
+            });
+            break;
+          case 'origen':
+            angular.forEach($filter('filter')(response,{'Origen':value.Origen}), function(value2){
+              sum+=value2.Monto;
+            });
+            break;
+          case 'jurisdiccion':
+            angular.forEach($filter('filter')(response,{'Jurisdiccion':value.Jurisdiccion}), function(value2){
+              sum+=value2.Monto;
+            });
+            break;
+          case 'donante':
+            angular.forEach($filter('filter')(response,{'Donante':value.Donante}), function(value2){
+              sum+=value2.Monto;
+            });
+            break;
+        }
+        
         var aux=[];
-        aux.push(value);
+        aux.push(value.Partido);
         aux.push(sum);
         this.push(aux);
       }, chartdata);
@@ -26,16 +84,56 @@ angular.module('quienPagaApp')
     });
 
     $scope.Selectores=DataService.GetSelectors();
-    /*DataService.GetSelectors().then(function(response){
-      $scope.Partido=angular.toJson(response.partidosector);
-      console.log($scope.Partido);
-    });
-*/
+
     $scope.displayGif=false;
 
     $scope.onSelectRowFunction = function(selectedItem){
       $state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
     };
+
+    $scope.$watch('SelectPartidoSector',function(newVal,oldVal){
+      if (angular.isDefined(newVal) && newVal!==oldVal){
+        console.log(newVal);
+        console.log(oldVal);
+
+        var hash= (window.location.hash.split('#'))[1].split('&');
+        console.log(hash);
+        var newHash='';
+        if(window.location.hash.contains('Jurisdiccion')){
+          angular.forEach(hash, function(value){
+            var aux=value.split('=');
+            if (aux[0]!=='Jurisdiccion'){
+              if (newHash !== ''){
+                newHash+= '&'  + value;
+              }else{
+                newHash+=value;
+              }
+            }else{
+              if(newHash !== ''){
+                newHash+='&Jurisdiccion=' + newVal;
+              }else{
+                newHash+='Jurisdiccion=' + newVal;
+              }
+            }
+          });
+        }else{
+          angular.forEach(hash, function(value){
+            var aux=value.split('=');
+            if (newHash !== ''){
+              newHash+= '&'  + value;
+            }else{
+              newHash+=value;
+            }
+          });
+
+          if (newHash != ){
+            //newHash+=
+          }
+        }
+        console.log(newHash);
+        $state.go('/',{search:newHash});
+      }
+    });
 
  
   });

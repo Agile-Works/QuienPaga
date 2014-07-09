@@ -3,32 +3,61 @@
   <p ng-show="displayGif" style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>
 <div id="subHeader">
   <div id="search" style="margin:auto;width:895px;height:50px">
-    <select ui-select2="" ng-model="SelectedName" data-placeholder="Partidos o Sectores..." style="width:280px">
+    <select ui-select2="" ng-model="SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px">
       <option></option>
+      <option value="Todos" partido="true">Todos</option>
       <option ng-repeat="item in Selectores.partidosector" value="{{item.name}}" partido="{{item.isPartido}}">{{item.name}}</option>
     </select>
-     <select ui-select2="" ng-model="SelectedName" data-placeholder="Jurisdicción..." style="width:150px">
+     <select ui-select2="" ng-model="SelectJurisdiccion" data-placeholder="Jurisdicción..." style="width:150px">
       <option></option>
-      <option ng-repeat="item in Selectores.jurisdiccion" value="{{item}}">{{item}}</option>
+      <option ng-repeat="item in Selectores.jurisdiccion" value="{{item.Jurisdiccion}}">{{item.Jurisdiccion}}</option>
     </select>
-     <select ui-select2="" ng-model="SelectedName" data-placeholder="Origen o Concepto..." style="width:240px">
+     <select ui-select2="" ng-model="SelectOrigenConcepto" data-placeholder="Origen o Concepto..." style="width:240px">
       <option></option>
       <option ng-repeat="item in Selectores.origenconcepto" value="{{item.name}}" origen="{{item.isOrigen}}">{{item.name}}</option>
     </select>
-     <select ui-select2="" ng-model="SelectedName" data-placeholder="Donante..." style="width:210px">
+     <select ui-select2="" ng-model="SelectDonante" data-placeholder="Donante..." style="width:210px">
       <option></option>
-      <option ng-repeat="item in Selectores.donante | groupBy:'name'" value="{{item}}">{{item}}</option>
+      <option ng-repeat="item in Selectores.donante | groupBy:'name'" value="{{item.name}}">{{item.name}}</option>
     </select>
   </div>
 </div>
-<div id="subBody" style="float:right;margin-top:40px;width: 1024px;">
-  <div id="left" style="width:300px !important;display:inline-block;">
-   &nbsp;&nbsp;&nbsp;
-  </div>  
-  <div id="right" style="width: 600px;display:inline-block; margin:auto;">  
-    <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="padding:0;width:400px;margin:auto"></div>
-    <div>
-  </div>  
-</div>
+<div id="subBody" style="margin-top:40px;">
+  <div id="container"  style="width:1024px;margin:auto">
+    <div id="left" style="width:400px !important;display:inline-block;">
+      <table  style="margin-left:150px">
+       <tr>
+         <th>Agrupar por:</th>
+         <th></th>
+       </tr>
+        <tr>
+          <td>Partido</td>
+          <td><input type="radio" ng-model="Group" value="Partido"></td>
+        </tr>
+          <td>Sector</td>
+          <td><input type="radio" ng-model="Group" value="Sector"></td>
+        <tr>
+          <td>Jurisdiccion</td>
+          <td><input type="radio" ng-model="Group" value="Jurisdiccion"></td>
+        </tr>
+        <tr>
+          <td>Origen</td>
+          <td><input type="radio" ng-model="Group" value="Origen"></td>
+        </tr>
+        <tr>
+          <td>Concepto</td>
+          <td><input type="radio" ng-model="Group" value="Concepto"></td>
+        </tr>
+        <tr>
+          <td>Donante</td>
+          <td><input type="radio" ng-model="Group" value="Donante"></td>
+        </tr>
+      </table>
+      </div>  
+      <div id="right" style="width: 600px;display:inline-block; margin:auto;">  
+        <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="padding:0;width:400px;margin:auto"></div>
+      </div>  
+    </div>
+  </div>
 </div>
 

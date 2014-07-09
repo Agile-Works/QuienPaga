@@ -25,33 +25,62 @@ angular.module("views/main.html", []).run(["$templateCache", function($templateC
     "  <p ng-show=\"displayGif\" style=\"width: 70px; margin:70px auto;\"><img src=\"/Portals/_Sudestada/QuienPaga/scripts/wait.GIF\"></p>\n" +
     "<div id=\"subHeader\">\n" +
     "  <div id=\"search\" style=\"margin:auto;width:895px;height:50px\">\n" +
-    "    <select ui-select2=\"\" ng-model=\"SelectedName\" data-placeholder=\"Partidos o Sectores...\" style=\"width:280px\">\n" +
+    "    <select ui-select2=\"\" ng-model=\"SelectPartidoSector\" data-placeholder=\"Partidos o Sectores...\" style=\"width:280px\">\n" +
     "      <option></option>\n" +
+    "      <option value=\"Todos\" partido=\"true\">Todos</option>\n" +
     "      <option ng-repeat=\"item in Selectores.partidosector\" value=\"{{item.name}}\" partido=\"{{item.isPartido}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
-    "     <select ui-select2=\"\" ng-model=\"SelectedName\" data-placeholder=\"Jurisdicción...\" style=\"width:150px\">\n" +
+    "     <select ui-select2=\"\" ng-model=\"SelectJurisdiccion\" data-placeholder=\"Jurisdicción...\" style=\"width:150px\">\n" +
     "      <option></option>\n" +
-    "      <option ng-repeat=\"item in Selectores.jurisdiccion\" value=\"{{item}}\">{{item}}</option>\n" +
+    "      <option ng-repeat=\"item in Selectores.jurisdiccion\" value=\"{{item.Jurisdiccion}}\">{{item.Jurisdiccion}}</option>\n" +
     "    </select>\n" +
-    "     <select ui-select2=\"\" ng-model=\"SelectedName\" data-placeholder=\"Origen o Concepto...\" style=\"width:240px\">\n" +
+    "     <select ui-select2=\"\" ng-model=\"SelectOrigenConcepto\" data-placeholder=\"Origen o Concepto...\" style=\"width:240px\">\n" +
     "      <option></option>\n" +
     "      <option ng-repeat=\"item in Selectores.origenconcepto\" value=\"{{item.name}}\" origen=\"{{item.isOrigen}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
-    "     <select ui-select2=\"\" ng-model=\"SelectedName\" data-placeholder=\"Donante...\" style=\"width:210px\">\n" +
+    "     <select ui-select2=\"\" ng-model=\"SelectDonante\" data-placeholder=\"Donante...\" style=\"width:210px\">\n" +
     "      <option></option>\n" +
-    "      <option ng-repeat=\"item in Selectores.donante | groupBy:'name'\" value=\"{{item}}\">{{item}}</option>\n" +
+    "      <option ng-repeat=\"item in Selectores.donante | groupBy:'name'\" value=\"{{item.name}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
     "  </div>\n" +
     "</div>\n" +
-    "<div id=\"subBody\" style=\"float:right;margin-top:40px;width: 1024px;\">\n" +
-    "  <div id=\"left\" style=\"width:300px !important;display:inline-block;\">\n" +
-    "   &nbsp;&nbsp;&nbsp;\n" +
-    "  </div>  \n" +
-    "  <div id=\"right\" style=\"width: 600px;display:inline-block; margin:auto;\">  \n" +
-    "    <div google-chart chart=\"chart\" select=\"onSelectRowFunction(selectedItem)\" class=\"grafica\" style=\"padding:0;width:400px;margin:auto\"></div>\n" +
-    "    <div>\n" +
-    "  </div>  \n" +
-    "</div>\n" +
+    "<div id=\"subBody\" style=\"margin-top:40px;\">\n" +
+    "  <div id=\"container\"  style=\"width:1024px;margin:auto\">\n" +
+    "    <div id=\"left\" style=\"width:400px !important;display:inline-block;\">\n" +
+    "      <table  style=\"margin-left:150px\">\n" +
+    "       <tr>\n" +
+    "         <th>Agrupar por:</th>\n" +
+    "         <th></th>\n" +
+    "       </tr>\n" +
+    "        <tr>\n" +
+    "          <td>Partido</td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Partido\"></td>\n" +
+    "        </tr>\n" +
+    "          <td>Sector</td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Sector\"></td>\n" +
+    "        <tr>\n" +
+    "          <td>Jurisdiccion</td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Jurisdiccion\"></td>\n" +
+    "        </tr>\n" +
+    "        <tr>\n" +
+    "          <td>Origen</td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Origen\"></td>\n" +
+    "        </tr>\n" +
+    "        <tr>\n" +
+    "          <td>Concepto</td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Concepto\"></td>\n" +
+    "        </tr>\n" +
+    "        <tr>\n" +
+    "          <td>Donante</td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Donante\"></td>\n" +
+    "        </tr>\n" +
+    "      </table>\n" +
+    "      </div>  \n" +
+    "      <div id=\"right\" style=\"width: 600px;display:inline-block; margin:auto;\">  \n" +
+    "        <div google-chart chart=\"chart\" select=\"onSelectRowFunction(selectedItem)\" class=\"grafica\" style=\"padding:0;width:400px;margin:auto\"></div>\n" +
+    "      </div>  \n" +
+    "    </div>\n" +
+    "  </div>\n" +
     "</div>\n" +
     "\n" +
     "");

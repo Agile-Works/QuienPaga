@@ -7,17 +7,17 @@ angular
     'googlechart',
     'ui.select2',
   ])
-  .config(function ($stateProvider,$urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider) {
  
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/');
 
     $stateProvider
-      .state('todos', {
-        url:'/home',
+      .state('/', {
+        url:'/:search',
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
-      })
-      .state('partido', {
+      });
+      /*.state('partido', {
         url:'/partido/:id',
         templateUrl: 'views/partido.html',
         controller: 'PorPartidoCtrl'
@@ -31,9 +31,11 @@ angular
         url:'/contribuyente/:nombre',
         templateUrl: 'views/contribuyente.html',
         controller: 'PorContribuyenteCtrl'
-      });
+      });*/
   });
 
 angular.module('quienPagaApp').run(['uiSelect2Config', function(uiSelect2Config) {
   uiSelect2Config.placeholder = 'Placeholder text';
+  uiSelect2Config.allowClear = true;
+  
 }]);
