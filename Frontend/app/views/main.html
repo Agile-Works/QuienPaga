@@ -5,8 +5,7 @@
   <div id="search" style="margin:auto;width:895px;height:50px">
     <select ui-select2="" ng-model="SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px">
       <option></option>
-      <option value="Todos" partido="true">Todos</option>
-      <option ng-repeat="item in Selectores.partidosector" value="{{item.name}}&{{item.isPartido}}" partido="{{item.isPartido}}">{{item.name}}</option>
+      <option ng-repeat="item in Selectores.partidosector" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" partido="{{item.isPartido}}">{{item.name}}</option>
     </select>
      <select ui-select2="" ng-model="SelectJurisdiccion" data-placeholder="Jurisdicción..." style="width:150px">
       <option></option>
@@ -14,7 +13,7 @@
     </select>
      <select ui-select2="" ng-model="SelectOrigenConcepto" data-placeholder="Origen o Concepto..." style="width:240px">
       <option></option>
-      <option ng-repeat="item in Selectores.origenconcepto" value="{{item.name}}&{{item.isOrigen}}" origen="{{item.isOrigen}}">{{item.name}}</option>
+      <option ng-repeat="item in Selectores.origenconcepto" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" origen="{{item.isOrigen}}">{{item.name}}</option>
     </select>
      <select ui-select2="" ng-model="SelectDonante" data-placeholder="Donante..." style="width:210px">
       <option></option>

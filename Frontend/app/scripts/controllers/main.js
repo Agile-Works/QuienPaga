@@ -16,21 +16,29 @@ angular.module('quienPagaApp')
         switch(angular.lowercase(decodeURIComponent(param[0]))) {
           case 'partido':
             $scope.filtro.partido=decodeURIComponent(param[1]);
+            $scope.SelectPartidoSector=$scope.filtro.partido;
             break;
           case 'sector':
             $scope.filtro.sector=decodeURIComponent(param[1]);
+            $scope.SelectPartidoSector=[decodeURIComponent(param[1])];
+            console.log($scope.SelectPartidoSector);
             break;
           case 'concepto':
             $scope.filtro.concepto=decodeURIComponent(param[1]);
+            $scope.SelectOrigenConcepto=decodeURIComponent(param[1]);
+
             break;
           case 'origen':
             $scope.filtro.origen=decodeURIComponent(param[1]);
+            $scope.SelectOrigenConcepto=decodeURIComponent(param[1]);
             break;
           case 'jurisdiccion':
             $scope.filtro.jurisdiccion=decodeURIComponent(param[1]);
+            $scope.SelectJurisdiccion=decodeURIComponent(param[1]);
             break;
           case 'donante':
             $scope.filtro.donante=decodeURIComponent(param[1]);
+            $scope.SelectDonante=decodeURIComponent(param[1]);
             break;
           case 'agruparpor':
             $scope.filtro.agruparpor=decodeURIComponent(param[1]);
@@ -48,7 +56,6 @@ angular.module('quienPagaApp')
       var chartdata=[['Nombre','Montos']];
       var groupby='';
       angular.forEach($filter('groupBy')(response,$scope.filtro.agruparpor), function(value){
-        console.log(response);
         var sum= 0;
         switch(angular.lowercase($scope.filtro.agruparpor)){
           case 'partido':
@@ -93,16 +100,22 @@ angular.module('quienPagaApp')
       MainChart.methods={};
       MainChart.type = 'PieChart';
       MainChart.data=chartdata;
-      MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: ['#109618','#ff9900','#dc3912','#990099','#3366cc']};
+      if (angular.lowercase($scope.filtro.agruparpor) === 'partido'){
+        MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: ['#109618','#ff9900','#dc3912','#990099','#3366cc']};
+      }else{
+        MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
+      }
+      
       MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
       $scope.chart = MainChart;
     });
 
-    $scope.Selectores=DataService.GetSelectors();
+    $scope.Selectores=DataService.GetSelectors($scope.filtro);
 
     $scope.displayGif=false;
 
     $scope.onSelectRowFunction = function(selectedItem){
+
       $state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
     };
 
@@ -114,7 +127,7 @@ angular.module('quienPagaApp')
         if (hash[0] !== '/'){
           var aux=hash[0].split('/');
           hash[0]=aux[aux.length-1];
-          if(angular.lowercase(window.location.hash).indexOf('jurisdiccion') !== -1){
+          if(angular.lowercase(window.location.hash).indexOf('jurisdiccion=') !== -1){
             angular.forEach(hash, function(value){
               var aux=value.split('=');
               if (angular.lowercase(aux[0])!=='jurisdiccion'){
@@ -145,8 +158,6 @@ angular.module('quienPagaApp')
         if (newHash.indexOf('agruparpor') ===-1){
           newHash+='&agruparpor=Partido';
         }
-        
-        console.log(newHash);
         $state.go('/',{search:newHash});
       }
     });
@@ -160,7 +171,7 @@ angular.module('quienPagaApp')
         if (hash[0] !== '/'){
           var aux=hash[0].split('/');
           hash[0]=aux[aux.length-1];
-          if(angular.lowercase(window.location.hash).indexOf('donante') !== -1){
+          if(angular.lowercase(window.location.hash).indexOf('donante=') !== -1){
             angular.forEach(hash, function(value){
               var aux=value.split('=');
               if (angular.lowercase(aux[0])!=='donante'){
@@ -191,7 +202,6 @@ angular.module('quienPagaApp')
         if (newHash.indexOf('agruparpor') ===-1){
           newHash+='&agruparpor=Partido';
         }
-        
         console.log(newHash);
         $state.go('/',{search:newHash});
       }
@@ -206,7 +216,7 @@ angular.module('quienPagaApp')
         var selectType='Origen';
         var groupby='Partido';
         var toRemove='Concepto';
-        var type= newVal.split('&');
+        var type= document.getElementById(newVal.replace(' ','_')).getAttribute('origen');
         if (angular.lowercase(type[1]) === 'false'){ //SECTOR
           selectType='Concepto';
           groupby='Partido';
@@ -241,7 +251,6 @@ angular.module('quienPagaApp')
           newHash=hash[0] + selectType + '=' + type[0] + '&agruparpor=' + groupby;
         }
        
-        console.log(newHash);
         $state.go('/',{search:newHash});
       }
     });
@@ -255,8 +264,10 @@ angular.module('quienPagaApp')
         var selectType='Partido';
         var groupby='Sector';
         var toRemove='Sector';
-        var type= newVal.split('&');
-        if (angular.lowercase(type[1]) === 'false'){ //SECTOR
+
+        var type= document.getElementById(newVal.replace(' ','_')).getAttribute('partido');
+        console.log(type);
+        if (angular.lowercase(type) === 'false'){ //SECTOR
           selectType='Sector';
           groupby='Jurisdiccion';
           toRemove='Partido';
@@ -285,12 +296,11 @@ angular.module('quienPagaApp')
               }
             }
           });
-          newHash+=(newHash !=='') ? '&' + selectType + '=' + type[0] : selectType + '=' + type[0];
+          newHash+=(newHash !=='') ? '&' + selectType + '=' + newVal : selectType + '=' +newVal;
         }else{
-          newHash=hash[0] + selectType + '=' + type[0] + '&agruparpor=' + groupby;
+          newHash=hash[0] + selectType + '=' + newVal + '&agruparpor=' + groupby;
         }
        
-        console.log(newHash);
         $state.go('/',{search:newHash});
       }
     });

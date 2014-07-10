@@ -27,8 +27,7 @@ angular.module("views/main.html", []).run(["$templateCache", function($templateC
     "  <div id=\"search\" style=\"margin:auto;width:895px;height:50px\">\n" +
     "    <select ui-select2=\"\" ng-model=\"SelectPartidoSector\" data-placeholder=\"Partidos o Sectores...\" style=\"width:280px\">\n" +
     "      <option></option>\n" +
-    "      <option value=\"Todos\" partido=\"true\">Todos</option>\n" +
-    "      <option ng-repeat=\"item in Selectores.partidosector\" value=\"{{item.name}}&{{item.isPartido}}\" partido=\"{{item.isPartido}}\">{{item.name}}</option>\n" +
+    "      <option ng-repeat=\"item in Selectores.partidosector\" id=\"{{item.name.replace(' ','_')}}\" value=\"{{item.name}}\" partido=\"{{item.isPartido}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
     "     <select ui-select2=\"\" ng-model=\"SelectJurisdiccion\" data-placeholder=\"Jurisdicción...\" style=\"width:150px\">\n" +
     "      <option></option>\n" +
@@ -36,7 +35,7 @@ angular.module("views/main.html", []).run(["$templateCache", function($templateC
     "    </select>\n" +
     "     <select ui-select2=\"\" ng-model=\"SelectOrigenConcepto\" data-placeholder=\"Origen o Concepto...\" style=\"width:240px\">\n" +
     "      <option></option>\n" +
-    "      <option ng-repeat=\"item in Selectores.origenconcepto\" value=\"{{item.name}}&{{item.isOrigen}}\" origen=\"{{item.isOrigen}}\">{{item.name}}</option>\n" +
+    "      <option ng-repeat=\"item in Selectores.origenconcepto\" id=\"{{item.name.replace(' ','_')}}\" value=\"{{item.name}}\" origen=\"{{item.isOrigen}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
     "     <select ui-select2=\"\" ng-model=\"SelectDonante\" data-placeholder=\"Donante...\" style=\"width:210px\">\n" +
     "      <option></option>\n" +

@@ -35,7 +35,6 @@ angular
   });
 
 angular.module('quienPagaApp').run(['uiSelect2Config', function(uiSelect2Config) {
-  uiSelect2Config.placeholder = 'Placeholder text';
   uiSelect2Config.allowClear = true;
   
 }]);

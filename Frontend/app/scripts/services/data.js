@@ -135,7 +135,8 @@ angular.module('quienPagaApp')
     }
   };
   
-  this.GetSelectors=function(){
+  this.GetSelectors=function(filter){
+    self.filterData(partidosector, filter);
     var dato= {'partidosector': partidosector, 'origenconcepto':origenconcepto,'donante':donante,'jurisdiccion':jurisdiccion};
     return dato;
   };
