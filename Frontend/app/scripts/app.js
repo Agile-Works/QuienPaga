@@ -7,9 +7,9 @@ angular
     'googlechart',
     'ui.select2',
   ])
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider) {
  
-    $urlRouterProvider.otherwise('/');
+  //  $urlRouterProvider.otherwise('/');
 
     $stateProvider
       .state('/', {

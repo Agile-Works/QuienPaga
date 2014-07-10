@@ -6,7 +6,7 @@
     <select ui-select2="" ng-model="SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px">
       <option></option>
       <option value="Todos" partido="true">Todos</option>
-      <option ng-repeat="item in Selectores.partidosector" value="{{item.name}}" partido="{{item.isPartido}}">{{item.name}}</option>
+      <option ng-repeat="item in Selectores.partidosector" value="{{item.name}}&{{item.isPartido}}" partido="{{item.isPartido}}">{{item.name}}</option>
     </select>
      <select ui-select2="" ng-model="SelectJurisdiccion" data-placeholder="Jurisdicción..." style="width:150px">
       <option></option>
@@ -14,7 +14,7 @@
     </select>
      <select ui-select2="" ng-model="SelectOrigenConcepto" data-placeholder="Origen o Concepto..." style="width:240px">
       <option></option>
-      <option ng-repeat="item in Selectores.origenconcepto" value="{{item.name}}" origen="{{item.isOrigen}}">{{item.name}}</option>
+      <option ng-repeat="item in Selectores.origenconcepto" value="{{item.name}}&{{item.isOrigen}}" origen="{{item.isOrigen}}">{{item.name}}</option>
     </select>
      <select ui-select2="" ng-model="SelectDonante" data-placeholder="Donante..." style="width:210px">
       <option></option>
@@ -32,25 +32,25 @@
        </tr>
         <tr>
           <td>Partido</td>
-          <td><input type="radio" ng-model="Group" value="Partido"></td>
+          <td><input type="radio" ng-model="filtro.agruparpor" value="Partido"></td>
         </tr>
           <td>Sector</td>
-          <td><input type="radio" ng-model="Group" value="Sector"></td>
+          <td><input type="radio" ng-model="filtro.agruparpor" value="Sector"></td>
         <tr>
           <td>Jurisdiccion</td>
-          <td><input type="radio" ng-model="Group" value="Jurisdiccion"></td>
+          <td><input type="radio" ng-model="filtro.agruparpor" value="Jurisdiccion"></td>
         </tr>
         <tr>
           <td>Origen</td>
-          <td><input type="radio" ng-model="Group" value="Origen"></td>
+          <td><input type="radio" ng-model="filtro.agruparpor" value="Origen"></td>
         </tr>
         <tr>
           <td>Concepto</td>
-          <td><input type="radio" ng-model="Group" value="Concepto"></td>
+          <td><input type="radio" ng-model="filtro.agruparpor" value="Concepto"></td>
         </tr>
         <tr>
           <td>Donante</td>
-          <td><input type="radio" ng-model="Group" value="Donante"></td>
+          <td><input type="radio" ng-model="filtro.agruparpor" value="Donante"></td>
         </tr>
       </table>
       </div>  

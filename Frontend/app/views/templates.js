@@ -28,7 +28,7 @@ angular.module("views/main.html", []).run(["$templateCache", function($templateC
     "    <select ui-select2=\"\" ng-model=\"SelectPartidoSector\" data-placeholder=\"Partidos o Sectores...\" style=\"width:280px\">\n" +
     "      <option></option>\n" +
     "      <option value=\"Todos\" partido=\"true\">Todos</option>\n" +
-    "      <option ng-repeat=\"item in Selectores.partidosector\" value=\"{{item.name}}\" partido=\"{{item.isPartido}}\">{{item.name}}</option>\n" +
+    "      <option ng-repeat=\"item in Selectores.partidosector\" value=\"{{item.name}}&{{item.isPartido}}\" partido=\"{{item.isPartido}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
     "     <select ui-select2=\"\" ng-model=\"SelectJurisdiccion\" data-placeholder=\"Jurisdicción...\" style=\"width:150px\">\n" +
     "      <option></option>\n" +
@@ -36,7 +36,7 @@ angular.module("views/main.html", []).run(["$templateCache", function($templateC
     "    </select>\n" +
     "     <select ui-select2=\"\" ng-model=\"SelectOrigenConcepto\" data-placeholder=\"Origen o Concepto...\" style=\"width:240px\">\n" +
     "      <option></option>\n" +
-    "      <option ng-repeat=\"item in Selectores.origenconcepto\" value=\"{{item.name}}\" origen=\"{{item.isOrigen}}\">{{item.name}}</option>\n" +
+    "      <option ng-repeat=\"item in Selectores.origenconcepto\" value=\"{{item.name}}&{{item.isOrigen}}\" origen=\"{{item.isOrigen}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
     "     <select ui-select2=\"\" ng-model=\"SelectDonante\" data-placeholder=\"Donante...\" style=\"width:210px\">\n" +
     "      <option></option>\n" +
@@ -54,25 +54,25 @@ angular.module("views/main.html", []).run(["$templateCache", function($templateC
     "       </tr>\n" +
     "        <tr>\n" +
     "          <td>Partido</td>\n" +
-    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Partido\"></td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"filtro.agruparpor\" value=\"Partido\"></td>\n" +
     "        </tr>\n" +
     "          <td>Sector</td>\n" +
-    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Sector\"></td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"filtro.agruparpor\" value=\"Sector\"></td>\n" +
     "        <tr>\n" +
     "          <td>Jurisdiccion</td>\n" +
-    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Jurisdiccion\"></td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"filtro.agruparpor\" value=\"Jurisdiccion\"></td>\n" +
     "        </tr>\n" +
     "        <tr>\n" +
     "          <td>Origen</td>\n" +
-    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Origen\"></td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"filtro.agruparpor\" value=\"Origen\"></td>\n" +
     "        </tr>\n" +
     "        <tr>\n" +
     "          <td>Concepto</td>\n" +
-    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Concepto\"></td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"filtro.agruparpor\" value=\"Concepto\"></td>\n" +
     "        </tr>\n" +
     "        <tr>\n" +
     "          <td>Donante</td>\n" +
-    "          <td><input type=\"radio\" ng-model=\"Group\" value=\"Donante\"></td>\n" +
+    "          <td><input type=\"radio\" ng-model=\"filtro.agruparpor\" value=\"Donante\"></td>\n" +
     "        </tr>\n" +
     "      </table>\n" +
     "      </div>  \n" +

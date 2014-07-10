@@ -2,75 +2,90 @@
 
 angular.module('quienPagaApp')
   .controller('MainCtrl', function ($scope,$http,$window,DataService,$stateParams, $state,$filter) {
-
-
-    //Filtro
-    var filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
+    //$scope.filtro
+    $scope.filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
+    
     if (angular.isDefined($stateParams.search) && $stateParams.search !==''){
       angular.forEach($stateParams.search.split('&'), function(value){
-        var param= value.$stateParams.search('=');
-        switch(angular.lowercase(param[0])) {
+        var param= value.split('=');
+        if (param[0].indexOf('/') !== -1){
+          var aux= param[0].split('/');
+          param[0]=aux[aux.length-1];
+        }
+
+        switch(angular.lowercase(decodeURIComponent(param[0]))) {
           case 'partido':
-            filtro.partido=param[1];
+            $scope.filtro.partido=decodeURIComponent(param[1]);
             break;
           case 'sector':
-            filtro.sector=param[1];
+            $scope.filtro.sector=decodeURIComponent(param[1]);
             break;
           case 'concepto':
-            filtro.concepto=param[1];
+            $scope.filtro.concepto=decodeURIComponent(param[1]);
             break;
           case 'origen':
-            filtro.origen=param[1];
+            $scope.filtro.origen=decodeURIComponent(param[1]);
             break;
           case 'jurisdiccion':
-            filtro.jurisdiccion=param[1];
+            $scope.filtro.jurisdiccion=decodeURIComponent(param[1]);
             break;
           case 'donante':
-            filtro.donante=param[1];
+            $scope.filtro.donante=decodeURIComponent(param[1]);
             break;
           case 'agruparpor':
-            filtro.agruparpor=param[1];
+            $scope.filtro.agruparpor=decodeURIComponent(param[1]);
         }
       });
+      console.log('$scope.filtro');
+      console.log($scope.filtro);
+      console.log('------------------------');
     }
 
 
 
     $scope.displayGif=true;
-    DataService.GetAll(filtro).then(function(response){
-      var chartdata=[['Partido','Montos']];
-      angular.forEach($filter('groupBy')(response,filtro.agruparpor), function(value){
+    DataService.GetAll($scope.filtro).then(function(response){
+      var chartdata=[['Nombre','Montos']];
+      var groupby='';
+      angular.forEach($filter('groupBy')(response,$scope.filtro.agruparpor), function(value){
+        console.log(response);
         var sum= 0;
-        switch(angular.lowercase(filtro.agruparpor)){
+        switch(angular.lowercase($scope.filtro.agruparpor)){
           case 'partido':
             angular.forEach($filter('filter')(response,{'Partido':value.Partido}), function(value2){
               sum+=value2.Monto;
             });
+            groupby=value.Partido;
             break;
           case 'sector':
             angular.forEach($filter('filter')(response,{'Sector':value.Sector}), function(value2){
               sum+=value2.Monto;
             });
+            groupby=value.Sector;
             break;
           case 'origen':
             angular.forEach($filter('filter')(response,{'Origen':value.Origen}), function(value2){
               sum+=value2.Monto;
             });
+            groupby=value.Origen;
             break;
           case 'jurisdiccion':
             angular.forEach($filter('filter')(response,{'Jurisdiccion':value.Jurisdiccion}), function(value2){
               sum+=value2.Monto;
             });
+            groupby=value.Jurisdiccion;
             break;
           case 'donante':
             angular.forEach($filter('filter')(response,{'Donante':value.Donante}), function(value2){
               sum+=value2.Monto;
             });
+            groupby=value.Donante;
             break;
         }
         
         var aux=[];
-        aux.push(value.Partido);
+        aux.push();
+        aux.push(groupby);
         aux.push(sum);
         this.push(aux);
       }, chartdata);
@@ -91,49 +106,193 @@ angular.module('quienPagaApp')
       $state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
     };
 
-    $scope.$watch('SelectPartidoSector',function(newVal,oldVal){
+    $scope.$watch('SelectJurisdiccion',function(newVal,oldVal){
       if (angular.isDefined(newVal) && newVal!==oldVal){
-        console.log(newVal);
-        console.log(oldVal);
-
-        var hash= (window.location.hash.split('#'))[1].split('&');
-        console.log(hash);
+        var url= decodeURIComponent(window.location.hash);
+        var hash= (url.split('#'))[1].split('&');
         var newHash='';
-        if(window.location.hash.contains('Jurisdiccion')){
-          angular.forEach(hash, function(value){
-            var aux=value.split('=');
-            if (aux[0]!=='Jurisdiccion'){
-              if (newHash !== ''){
-                newHash+= '&'  + value;
+        if (hash[0] !== '/'){
+          var aux=hash[0].split('/');
+          hash[0]=aux[aux.length-1];
+          if(angular.lowercase(window.location.hash).indexOf('jurisdiccion') !== -1){
+            angular.forEach(hash, function(value){
+              var aux=value.split('=');
+              if (angular.lowercase(aux[0])!=='jurisdiccion'){
+                if (newHash !== ''){
+                  newHash+= '&'  + value;
+                }else{
+                  newHash+=value;
+                }
               }else{
-                newHash+=value;
+                if(newHash !== ''){
+                  newHash+='&Jurisdiccion=' + newVal;
+                }else{
+                  newHash+='Jurisdiccion=' + newVal;
+                }
               }
+            });
+          }else{
+            if (hash[0] !== ''){
+              newHash+=hash[0] + '&Jurisdiccion=' + newVal;
             }else{
-              if(newHash !== ''){
-                newHash+='&Jurisdiccion=' + newVal;
-              }else{
-                newHash+='Jurisdiccion=' + newVal;
-              }
+              newHash+='Jurisdiccion=' + newVal;
             }
-          });
-        }else{
-          angular.forEach(hash, function(value){
-            var aux=value.split('=');
-            if (newHash !== ''){
-              newHash+= '&'  + value;
-            }else{
-              newHash+=value;
-            }
-          });
-
-          if (newHash != ){
-            //newHash+=
           }
+        }else{
+          newHash=hash[0] + 'Jurisdiccion=' + newVal;
         }
+
+        if (newHash.indexOf('agruparpor') ===-1){
+          newHash+='&agruparpor=Partido';
+        }
+        
         console.log(newHash);
         $state.go('/',{search:newHash});
       }
     });
 
+    $scope.$watch('SelectDonante',function(newVal,oldVal){
+      if (angular.isDefined(newVal) && newVal!==oldVal){
+        var url= decodeURIComponent(window.location.hash);
+        var hash= (url.split('#'))[1].split('&');
+        console.log(hash);
+        var newHash='';
+        if (hash[0] !== '/'){
+          var aux=hash[0].split('/');
+          hash[0]=aux[aux.length-1];
+          if(angular.lowercase(window.location.hash).indexOf('donante') !== -1){
+            angular.forEach(hash, function(value){
+              var aux=value.split('=');
+              if (angular.lowercase(aux[0])!=='donante'){
+                if (newHash !== ''){
+                  newHash+= '&'  + value;
+                }else{
+                  newHash+=value;
+                }
+              }else{
+                if(newHash !== ''){
+                  newHash+='&Donante=' + newVal;
+                }else{
+                  newHash+='Donante=' + newVal;
+                }
+              }
+            });
+          }else{
+            if (hash[0] !== ''){
+              newHash+=hash[0] + '&Donante=' + newVal;
+            }else{
+              newHash+='Donante=' + newVal;
+            }
+          }
+        }else{
+          newHash=hash[0] + 'Donante=' + newVal;
+        }
+
+        if (newHash.indexOf('agruparpor') ===-1){
+          newHash+='&agruparpor=Partido';
+        }
+        
+        console.log(newHash);
+        $state.go('/',{search:newHash});
+      }
+    });
+
+    $scope.$watch('SelectOrigenConcepto',function(newVal,oldVal){
+      if (angular.isDefined(newVal) && newVal!==oldVal){
+        var url= decodeURIComponent(window.location.hash);
+        var hash= (url.split('#'))[1].split('&');
+        console.log(hash);
+        var newHash='';
+        var selectType='Origen';
+        var groupby='Partido';
+        var toRemove='Concepto';
+        var type= newVal.split('&');
+        if (angular.lowercase(type[1]) === 'false'){ //SECTOR
+          selectType='Concepto';
+          groupby='Partido';
+          toRemove='Origen';
+        }
+
+        if (hash[0] !== '/'){
+          var aux=hash[0].split('/');
+          hash[0]=aux[aux.length-1];
+          angular.forEach(hash, function(value){
+            var aux2=value.split('=');
+            if (angular.lowercase(aux2[0])!==angular.lowercase(selectType) && angular.lowercase(aux2[0]) !==angular.lowercase(toRemove) && angular.lowercase(aux2[0])!== 'agruparpor'){
+              if (newHash !== ''){
+                newHash+= '&'  + value;
+              }else{
+                newHash+=value;
+              }
+            }else if (angular.lowercase(aux2[0])=== 'agruparpor'){
+              if (angular.lowercase(aux2[1]) === angular.lowercase(selectType)){
+                newHash+=(newHash !== '')? '&agruparpor=' + groupby : 'agruparpor=' + groupby;
+              }else{
+                if (newHash !== ''){
+                  newHash+= '&'  + value;
+                }else{
+                  newHash+=value;
+                }
+              }
+            }
+          });
+          newHash+=(newHash !=='') ? '&' + selectType + '=' + type[0] : selectType + '=' + type[0];
+        }else{
+          newHash=hash[0] + selectType + '=' + type[0] + '&agruparpor=' + groupby;
+        }
+       
+        console.log(newHash);
+        $state.go('/',{search:newHash});
+      }
+    });
+
+    $scope.$watch('SelectPartidoSector',function(newVal,oldVal){
+      if (angular.isDefined(newVal) && newVal!==oldVal){
+        var url= decodeURIComponent(window.location.hash);
+        var hash= (url.split('#'))[1].split('&');
+        console.log(hash);
+        var newHash='';
+        var selectType='Partido';
+        var groupby='Sector';
+        var toRemove='Sector';
+        var type= newVal.split('&');
+        if (angular.lowercase(type[1]) === 'false'){ //SECTOR
+          selectType='Sector';
+          groupby='Jurisdiccion';
+          toRemove='Partido';
+        }
+
+        if (hash[0] !== '/'){
+          var aux=hash[0].split('/');
+          hash[0]=aux[aux.length-1];
+          angular.forEach(hash, function(value){
+            var aux2=value.split('=');
+            if (angular.lowercase(aux2[0])!==angular.lowercase(selectType) && angular.lowercase(aux2[0]) !==angular.lowercase(toRemove) && angular.lowercase(aux2[0])!== 'agruparpor'){
+              if (newHash !== ''){
+                newHash+= '&'  + value;
+              }else{
+                newHash+=value;
+              }
+            }else if (angular.lowercase(aux2[0])=== 'agruparpor'){
+              if (angular.lowercase(aux2[1]) === angular.lowercase(selectType)){
+                newHash+=(newHash !== '')? '&agruparpor=' + groupby : 'agruparpor=' + groupby;
+              }else{
+                if (newHash !== ''){
+                  newHash+= '&'  + value;
+                }else{
+                  newHash+=value;
+                }
+              }
+            }
+          });
+          newHash+=(newHash !=='') ? '&' + selectType + '=' + type[0] : selectType + '=' + type[0];
+        }else{
+          newHash=hash[0] + selectType + '=' + type[0] + '&agruparpor=' + groupby;
+        }
+       
+        console.log(newHash);
+        $state.go('/',{search:newHash});
+      }
+    });
  
   });

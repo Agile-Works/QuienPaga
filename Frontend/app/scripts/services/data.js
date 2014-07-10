@@ -81,37 +81,28 @@ angular.module('quienPagaApp')
   };
 
   this.filterData= function(collection,filtro){
-    console.log(filtro);
     if (filtro.partido !==''){
       collection= $filter('filter')(collection,{'Partido':filtro.partido});
-      console.log(collection);
     }
 
     if(filtro.sector !==''){
       collection= $filter('filter')(collection,{'Sector':filtro.sector});
-      console.log(collection);
-
     }
 
     if(filtro.jurisdiccion !==''){
       collection= $filter('filter')(collection,{'Jurisdiccion':filtro.jurisdiccion});
-      console.log(collection);
-
     }
 
     if(filtro.origen !==''){
       collection= $filter('filter')(collection,{'Origen':filtro.origen});
-      console.log(collection);
     }
 
     if(filtro.concepto !==''){
       collection= $filter('filter')(collection,{'Concepto':filtro.concepto});
-      console.log(collection);
     }
 
     if(filtro.donante !==''){
       collection= $filter('filter')(collection,{'Donante':filtro.donante});
-      console.log(collection);
     }
 
     return collection;
@@ -126,7 +117,6 @@ angular.module('quienPagaApp')
           return self.filterData(response.data, filtro);
         });
     }else{
-      console.log('entro');
       return self.filterData(jsonData, filtro);
 
     }
