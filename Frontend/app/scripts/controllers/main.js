@@ -16,7 +16,7 @@ angular.module('quienPagaApp')
         switch(angular.lowercase(decodeURIComponent(param[0]))) {
           case 'partido':
             $scope.filtro.partido=decodeURIComponent(param[1]);
-            $scope.SelectPartidoSector=$scope.filtro.partido;
+            $scope.SelectPartidoSector=[$scope.filtro.partido];
             break;
           case 'sector':
             $scope.filtro.sector=decodeURIComponent(param[1]);
@@ -25,20 +25,20 @@ angular.module('quienPagaApp')
             break;
           case 'concepto':
             $scope.filtro.concepto=decodeURIComponent(param[1]);
-            $scope.SelectOrigenConcepto=decodeURIComponent(param[1]);
+            $scope.SelectOrigenConcepto=[decodeURIComponent(param[1])];
 
             break;
           case 'origen':
             $scope.filtro.origen=decodeURIComponent(param[1]);
-            $scope.SelectOrigenConcepto=decodeURIComponent(param[1]);
+            $scope.SelectOrigenConcepto=[decodeURIComponent(param[1])];
             break;
           case 'jurisdiccion':
             $scope.filtro.jurisdiccion=decodeURIComponent(param[1]);
-            $scope.SelectJurisdiccion=decodeURIComponent(param[1]);
+            $scope.SelectJurisdiccion=[decodeURIComponent(param[1])];
             break;
           case 'donante':
             $scope.filtro.donante=decodeURIComponent(param[1]);
-            $scope.SelectDonante=decodeURIComponent(param[1]);
+            $scope.SelectDonante=[decodeURIComponent(param[1])];
             break;
           case 'agruparpor':
             $scope.filtro.agruparpor=decodeURIComponent(param[1]);
@@ -127,82 +127,95 @@ angular.module('quienPagaApp')
         if (hash[0] !== '/'){
           var aux=hash[0].split('/');
           hash[0]=aux[aux.length-1];
-          if(angular.lowercase(window.location.hash).indexOf('jurisdiccion=') !== -1){
-            angular.forEach(hash, function(value){
-              var aux=value.split('=');
-              if (angular.lowercase(aux[0])!=='jurisdiccion'){
+          angular.forEach(hash, function(value){
+            var aux2=value.split('=');
+            if (angular.lowercase(aux2[0])!==angular.lowercase('jurisdiccion') && angular.lowercase(aux2[0])!== 'agruparpor'){
+              if (newHash !== ''){
+                newHash+= '&'  + value;
+              }else{
+                newHash+=value;
+              }
+            }else if (angular.lowercase(aux2[0])=== 'agruparpor'){
+              if (angular.lowercase(aux2[1]) === angular.lowercase('jurisdiccion')){
+                newHash+=(newHash !== '')? '&agruparpor=partido' : 'agruparpor=partido';
+              }else{
                 if (newHash !== ''){
                   newHash+= '&'  + value;
                 }else{
                   newHash+=value;
                 }
-              }else{
-                if(newHash !== ''){
-                  newHash+='&Jurisdiccion=' + newVal;
-                }else{
-                  newHash+='Jurisdiccion=' + newVal;
-                }
               }
-            });
-          }else{
-            if (hash[0] !== ''){
-              newHash+=hash[0] + '&Jurisdiccion=' + newVal;
-            }else{
-              newHash+='Jurisdiccion=' + newVal;
             }
-          }
+          });
+          newHash+=(newHash !=='') ? '&Jurisdiccion=' + newVal : 'Jurisdiccion=' + newVal;
         }else{
-          newHash=hash[0] + 'Jurisdiccion=' + newVal;
+          newHash=hash[0] + 'Jurisdiccion=' + newVal + '&agruparpor=partido';
         }
 
-        if (newHash.indexOf('agruparpor') ===-1){
-          newHash+='&agruparpor=Partido';
-        }
         $state.go('/',{search:newHash});
       }
+    });
+
+    $scope.$watch('filtro.agruparpor',function(newVal,oldVal){
+      console.log(oldVal);
+      var url= decodeURIComponent(window.location.hash);
+      var hash= (url.split('#'))[1].split('&');
+      var newHash='';
+      if (hash[0] !== '/'){
+        var aux=hash[0].split('/');
+        hash[0]=aux[aux.length-1];
+        angular.forEach(hash, function(value){
+          var aux2=value.split('=');
+          if (angular.lowercase(aux2[0])!== 'agruparpor'){
+            if (newHash !== ''){
+              newHash+= '&'  + value;
+            }else{
+              newHash+=value;
+            }
+          }else{
+            newHash+=(newHash !== '')? '&agruparpor=' + newVal : 'agruparpor=' + newVal;
+          }
+        });
+      }else{
+        newHash=hash[0] + 'agruparpor=' + newVal;
+      }
+
+      $state.go('/',{search:newHash});
     });
 
     $scope.$watch('SelectDonante',function(newVal,oldVal){
       if (angular.isDefined(newVal) && newVal!==oldVal){
         var url= decodeURIComponent(window.location.hash);
         var hash= (url.split('#'))[1].split('&');
-        console.log(hash);
         var newHash='';
         if (hash[0] !== '/'){
           var aux=hash[0].split('/');
           hash[0]=aux[aux.length-1];
-          if(angular.lowercase(window.location.hash).indexOf('donante=') !== -1){
-            angular.forEach(hash, function(value){
-              var aux=value.split('=');
-              if (angular.lowercase(aux[0])!=='donante'){
+          angular.forEach(hash, function(value){
+            var aux2=value.split('=');
+            if (angular.lowercase(aux2[0])!==angular.lowercase('donante') && angular.lowercase(aux2[0])!== 'agruparpor'){
+              if (newHash !== ''){
+                newHash+= '&'  + value;
+              }else{
+                newHash+=value;
+              }
+            }else if (angular.lowercase(aux2[0])=== 'agruparpor'){
+              if (angular.lowercase(aux2[1]) === angular.lowercase('donante')){
+                newHash+=(newHash !== '')? '&agruparpor=partido' : 'agruparpor=partido';
+              }else{
                 if (newHash !== ''){
                   newHash+= '&'  + value;
                 }else{
                   newHash+=value;
                 }
-              }else{
-                if(newHash !== ''){
-                  newHash+='&Donante=' + newVal;
-                }else{
-                  newHash+='Donante=' + newVal;
-                }
               }
-            });
-          }else{
-            if (hash[0] !== ''){
-              newHash+=hash[0] + '&Donante=' + newVal;
-            }else{
-              newHash+='Donante=' + newVal;
             }
-          }
+          });
+          newHash+=(newHash !=='') ? '&Donante=' + newVal : 'Donante=' + newVal;
         }else{
-          newHash=hash[0] + 'Donante=' + newVal;
+          newHash=hash[0] + 'Donante=' + newVal + '&agruparpor=partido';
         }
 
-        if (newHash.indexOf('agruparpor') ===-1){
-          newHash+='&agruparpor=Partido';
-        }
-        console.log(newHash);
         $state.go('/',{search:newHash});
       }
     });
@@ -211,13 +224,13 @@ angular.module('quienPagaApp')
       if (angular.isDefined(newVal) && newVal!==oldVal){
         var url= decodeURIComponent(window.location.hash);
         var hash= (url.split('#'))[1].split('&');
-        console.log(hash);
+
         var newHash='';
         var selectType='Origen';
         var groupby='Partido';
         var toRemove='Concepto';
         var type= document.getElementById(newVal.replace(' ','_')).getAttribute('origen');
-        if (angular.lowercase(type[1]) === 'false'){ //SECTOR
+        if (angular.lowercase(type) === 'false'){ //SECTOR
           selectType='Concepto';
           groupby='Partido';
           toRemove='Origen';
@@ -246,9 +259,9 @@ angular.module('quienPagaApp')
               }
             }
           });
-          newHash+=(newHash !=='') ? '&' + selectType + '=' + type[0] : selectType + '=' + type[0];
+          newHash+=(newHash !=='') ? '&' + selectType + '=' + newVal : selectType + '=' + newVal;
         }else{
-          newHash=hash[0] + selectType + '=' + type[0] + '&agruparpor=' + groupby;
+          newHash=hash[0] + selectType + '=' + newVal + '&agruparpor=' + groupby;
         }
        
         $state.go('/',{search:newHash});

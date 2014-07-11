@@ -9,7 +9,7 @@ angular
   ])
   .config(function ($stateProvider) {
  
-  //  $urlRouterProvider.otherwise('/');
+   // $urlRouterProvider.otherwise('/');
 
     $stateProvider
       .state('/', {
