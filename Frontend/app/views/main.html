@@ -1,6 +1,5 @@
 
 <div class="body">
-  <p ng-show="displayGif" style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>
 <div id="subHeader">
   <div id="search" style="margin:auto;width:895px;height:50px">
     <select ui-select2="" ng-model="SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px">
@@ -53,8 +52,12 @@
         </tr>
       </table>
       </div>  
+      <p ng-show="displayGif" style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>
       <div id="right" style="width: 600px;display:inline-block; margin:auto;">  
         <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="padding:0;width:400px;margin:auto"></div>
+        <div id="table">
+        
+        </div>
       </div>  
     </div>
   </div>

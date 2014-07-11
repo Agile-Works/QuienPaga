@@ -108,7 +108,7 @@ namespace QuienPaga.Api.Repos
                                                    Donante,
                                                    Monto
                                                    From [QuienPaga].[dbo].[QP_Ingresos]
-                                                   Order by Partido, Sector");
+                                                   Order By Monto desc, Partido asc");
         }
     }
 }

@@ -22,7 +22,6 @@ angular.module("views/contribuyente.html", []).run(["$templateCache", function($
 angular.module("views/main.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("views/main.html",
     "<div class=\"body\">\n" +
-    "  <p ng-show=\"displayGif\" style=\"width: 70px; margin:70px auto;\"><img src=\"/Portals/_Sudestada/QuienPaga/scripts/wait.GIF\"></p>\n" +
     "<div id=\"subHeader\">\n" +
     "  <div id=\"search\" style=\"margin:auto;width:895px;height:50px\">\n" +
     "    <select ui-select2=\"\" ng-model=\"SelectPartidoSector\" data-placeholder=\"Partidos o Sectores...\" style=\"width:280px\">\n" +
@@ -75,8 +74,12 @@ angular.module("views/main.html", []).run(["$templateCache", function($templateC
     "        </tr>\n" +
     "      </table>\n" +
     "      </div>  \n" +
+    "      <p ng-show=\"displayGif\" style=\"width: 70px; margin:70px auto;\"><img src=\"/Portals/_Sudestada/QuienPaga/scripts/wait.GIF\"></p>\n" +
     "      <div id=\"right\" style=\"width: 600px;display:inline-block; margin:auto;\">  \n" +
     "        <div google-chart chart=\"chart\" select=\"onSelectRowFunction(selectedItem)\" class=\"grafica\" style=\"padding:0;width:400px;margin:auto\"></div>\n" +
+    "        <div id=\"table\">\n" +
+    "        \n" +
+    "        </div>\n" +
     "      </div>  \n" +
     "    </div>\n" +
     "  </div>\n" +

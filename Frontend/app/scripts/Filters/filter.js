@@ -4,7 +4,7 @@
 var uniqueItems = function (data, key) {
   var result = [];
   var ret= [];
-  if (data !== null){
+  if (angular.isDefined(data)){
     for (var i = 0; i < data.length; i++) {
       var value = data[i][key];
       if (result.indexOf(value) === -1) {
@@ -13,6 +13,8 @@ var uniqueItems = function (data, key) {
       }
     }
   }
+
+
   return ret;
 };
 
@@ -26,6 +28,14 @@ app.filter('groupBy',function () {
     };
   });
 
+app.filter('unique',function () {
+  return function (collection, key) {
+    if (collection === null){
+      return;
+    }
+    return uniqueItems(collection, key);
+  };
+});
 /*app.filter('filterBy',function(){
   return function(collection, args){
     angular.forEach(args, function(arg){

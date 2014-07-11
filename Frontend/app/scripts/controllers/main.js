@@ -84,6 +84,12 @@ angular.module('quienPagaApp')
             });
             groupby=value.Donante;
             break;
+          case 'concepto':
+            angular.forEach($filter('filter')(response,{'Concepto':value.Donante}), function(value2){
+              sum+=value2.Monto;
+            });
+            groupby=value.Donante;
+            break;
         }
        
         var aux=[];
@@ -146,6 +152,12 @@ angular.module('quienPagaApp')
               });
               groupby=value.Donante;
               break;
+            case 'concepto':
+              angular.forEach($filter('filter')(response,{'Concepto':value.Donante}), function(value2){
+                sum+=value2.Monto;
+              });
+              groupby=value.Donante;
+              break;
           }
           
           var aux=[];
@@ -167,6 +179,7 @@ angular.module('quienPagaApp')
         MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
         $scope.chart = MainChart;
       });
+      $scope.displayGif=false;
 
     };
 

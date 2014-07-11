@@ -55,7 +55,7 @@ angular.module('quienPagaApp')
         partidosector.push(dato2);
       });
     });
-
+    partidosector= $filter('unique')(partidosector,name);
     //Origen concepto
     angular.forEach($filter('groupBy')(response.data,'Origen'), function(value){
       var dato={'name' : value.Origen, 'isOrigen':'true', 'origen':value.Origen};
@@ -66,6 +66,9 @@ angular.module('quienPagaApp')
       });
     });
 
+    origenconcepto=$filter('unique')(origenconcepto,name);
+
+
     //Donante
     angular.forEach($filter('groupBy')(response.data,'Donante'), function(value){
       angular.forEach($filter('groupBy')($filter('filter')(response.data,{'Donante':value.Donante}),'Partido'), function(value2){
@@ -74,10 +77,14 @@ angular.module('quienPagaApp')
       });
     });
 
+    donante=$filter('unique')(donante,name);
+
     //Jurisdiccion
     angular.forEach($filter('groupBy')(response.data,'Jurisdiccion'), function(value){
       jurisdiccion.push(value);
     });
+
+    jurisdiccion=$filter('unique')(jurisdiccion);
   };
 
   this.filterData= function(collection,filtro){
@@ -109,7 +116,6 @@ angular.module('quienPagaApp')
   };
 
   this.GetAll=function(filtro){
-    console.log('fltro');
     if (jsonData.length === 0){
       return $http.get(ApiUrl + 'GetAll')
         .then(function(response){
