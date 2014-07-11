@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('quienPagaApp')
-  .controller('MainCtrl', function ($scope,$http,$window,DataService,$stateParams, $state,$filter) {
+  .controller('MainCtrl', function ($scope,$http,DataService,$stateParams, $state,$filter,$location) {
+    
     //$scope.filtro
     $scope.filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
-    
+    console.log($location);
     if (angular.isDefined($stateParams.search) && $stateParams.search !==''){
       angular.forEach($stateParams.search.split('&'), function(value){
         var param= value.split('=');
@@ -44,12 +45,7 @@ angular.module('quienPagaApp')
             $scope.filtro.agruparpor=decodeURIComponent(param[1]);
         }
       });
-      console.log('$scope.filtro');
-      console.log($scope.filtro);
-      console.log('------------------------');
     }
-
-
 
     $scope.displayGif=true;
     DataService.GetAll($scope.filtro).then(function(response){
@@ -89,13 +85,14 @@ angular.module('quienPagaApp')
             groupby=value.Donante;
             break;
         }
-        
+       
         var aux=[];
         aux.push();
         aux.push(groupby);
         aux.push(sum);
         this.push(aux);
       }, chartdata);
+
       var MainChart = {};
       MainChart.methods={};
       MainChart.type = 'PieChart';
@@ -110,20 +107,87 @@ angular.module('quienPagaApp')
       $scope.chart = MainChart;
     });
 
+
+    $scope.Grafica=function(){
+      $scope.displayGif=true;
+      DataService.GetAll($scope.filtro).then(function(response){
+        var chartdata=[['Nombre','Montos']];
+        var groupby='';
+        angular.forEach($filter('groupBy')(response,$scope.filtro.agruparpor), function(value){
+          var sum= 0;
+          switch(angular.lowercase($scope.filtro.agruparpor)){
+            case 'partido':
+              angular.forEach($filter('filter')(response,{'Partido':value.Partido}), function(value2){
+                sum+=value2.Monto;
+              });
+              groupby=value.Partido;
+              break;
+            case 'sector':
+              angular.forEach($filter('filter')(response,{'Sector':value.Sector}), function(value2){
+                sum+=value2.Monto;
+              });
+              groupby=value.Sector;
+              break;
+            case 'origen':
+              angular.forEach($filter('filter')(response,{'Origen':value.Origen}), function(value2){
+                sum+=value2.Monto;
+              });
+              groupby=value.Origen;
+              break;
+            case 'jurisdiccion':
+              angular.forEach($filter('filter')(response,{'Jurisdiccion':value.Jurisdiccion}), function(value2){
+                sum+=value2.Monto;
+              });
+              groupby=value.Jurisdiccion;
+              break;
+            case 'donante':
+              angular.forEach($filter('filter')(response,{'Donante':value.Donante}), function(value2){
+                sum+=value2.Monto;
+              });
+              groupby=value.Donante;
+              break;
+          }
+          
+          var aux=[];
+          aux.push();
+          aux.push(groupby);
+          aux.push(sum);
+          this.push(aux);
+        }, chartdata);
+        var MainChart = {};
+        MainChart.methods={};
+        MainChart.type = 'PieChart';
+        MainChart.data=chartdata;
+        if (angular.lowercase($scope.filtro.agruparpor) === 'partido'){
+          MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: ['#109618','#ff9900','#dc3912','#990099','#3366cc']};
+        }else{
+          MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
+        }
+        
+        MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
+        $scope.chart = MainChart;
+      });
+
+    };
+
+
+
     $scope.Selectores=DataService.GetSelectors($scope.filtro);
 
     $scope.displayGif=false;
 
     $scope.onSelectRowFunction = function(selectedItem){
-
-      $state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
+      console.log(selectedItem);
+   //   $state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
     };
 
     $scope.$watch('SelectJurisdiccion',function(newVal,oldVal){
-      if (angular.isDefined(newVal) && newVal!==oldVal){
-        var url= decodeURIComponent(window.location.hash);
-        var hash= (url.split('#'))[1].split('&');
-        var newHash='';
+      console.log('newVal');
+      console.log(newVal);
+      var url= decodeURIComponent(window.location.hash);
+      var hash= (url.split('#'))[1].split('&');
+      var newHash='';
+      if (angular.isDefined(newVal)&& newVal !=='' && newVal!==oldVal){
         if (hash[0] !== '/'){
           var aux=hash[0].split('/');
           hash[0]=aux[aux.length-1];
@@ -151,9 +215,35 @@ angular.module('quienPagaApp')
         }else{
           newHash=hash[0] + 'Jurisdiccion=' + newVal + '&agruparpor=partido';
         }
-
-        $state.go('/',{search:newHash});
+      }else if (newVal ===''){
+        if (hash[0] !== '/'){
+          var aux2=hash[0].split('/');
+          hash[0]=aux2[aux2.length-1];
+          angular.forEach(hash, function(value){
+            var aux3=value.split('=');
+            if (angular.lowercase(aux3[0])!==angular.lowercase('jurisdiccion')) {
+              if (newHash !== ''){
+                newHash+= '&'  + value;
+              }else{
+                newHash+=value;
+              }
+            }else if (angular.lowercase(aux3[0])=== 'agruparpor'){
+              if (angular.lowercase(aux3[1]) === angular.lowercase('jurisdiccion')){
+                newHash+=(newHash !== '')? '&agruparpor=partido' : 'agruparpor=partido';
+              }else{
+                if (newHash !== ''){
+                  newHash+= '&'  + value;
+                }else{
+                  newHash+=value;
+                }
+              }
+            }
+          });
+        }
       }
+      $scope.filtro.jurisdiccion=newVal;
+      $location.path(newHash);
+      $scope.Grafica();
     });
 
     $scope.$watch('filtro.agruparpor',function(newVal,oldVal){
@@ -179,15 +269,19 @@ angular.module('quienPagaApp')
       }else{
         newHash=hash[0] + 'agruparpor=' + newVal;
       }
-
-      $state.go('/',{search:newHash});
+      $scope.filtro.agruparpor=newVal;
+      $location.path(newHash);
+      $scope.Grafica();
+  //    $state.go('/',{search:newHash});
     });
 
     $scope.$watch('SelectDonante',function(newVal,oldVal){
-      if (angular.isDefined(newVal) && newVal!==oldVal){
-        var url= decodeURIComponent(window.location.hash);
-        var hash= (url.split('#'))[1].split('&');
-        var newHash='';
+      console.log('newVal');
+      console.log(newVal);
+      var url= decodeURIComponent(window.location.hash);
+      var hash= (url.split('#'))[1].split('&');
+      var newHash='';
+      if (angular.isDefined(newVal)&& newVal !=='' && newVal!==oldVal){
         if (hash[0] !== '/'){
           var aux=hash[0].split('/');
           hash[0]=aux[aux.length-1];
@@ -215,17 +309,42 @@ angular.module('quienPagaApp')
         }else{
           newHash=hash[0] + 'Donante=' + newVal + '&agruparpor=partido';
         }
-
-        $state.go('/',{search:newHash});
+      }else if (newVal ===''){
+        if (hash[0] !== '/'){
+          var aux2=hash[0].split('/');
+          hash[0]=aux2[aux2.length-1];
+          angular.forEach(hash, function(value){
+            var aux3=value.split('=');
+            if (angular.lowercase(aux3[0])!==angular.lowercase('donante')) {
+              if (newHash !== ''){
+                newHash+= '&'  + value;
+              }else{
+                newHash+=value;
+              }
+            }else if (angular.lowercase(aux3[0])=== 'agruparpor'){
+              if (angular.lowercase(aux3[1]) === angular.lowercase('donante')){
+                newHash+=(newHash !== '')? '&agruparpor=partido' : 'agruparpor=partido';
+              }else{
+                if (newHash !== ''){
+                  newHash+= '&'  + value;
+                }else{
+                  newHash+=value;
+                }
+              }
+            }
+          });
+        }
       }
+      $scope.filtro.donante=newVal;
+      $location.path(newHash);
+      $scope.Grafica();
     });
 
     $scope.$watch('SelectOrigenConcepto',function(newVal,oldVal){
-      if (angular.isDefined(newVal) && newVal!==oldVal){
-        var url= decodeURIComponent(window.location.hash);
-        var hash= (url.split('#'))[1].split('&');
-
-        var newHash='';
+      var url= decodeURIComponent(window.location.hash);
+      var hash= (url.split('#'))[1].split('&');
+      var newHash='';
+      if (angular.isDefined(newVal) && newVal!=='' && newVal!==oldVal){
         var selectType='Origen';
         var groupby='Partido';
         var toRemove='Concepto';
@@ -234,6 +353,10 @@ angular.module('quienPagaApp')
           selectType='Concepto';
           groupby='Partido';
           toRemove='Origen';
+          $scope.filtro.concepto=newVal;
+        }else{
+          $scope.filtro.origen=newVal;
+
         }
 
         if (hash[0] !== '/'){
@@ -263,27 +386,49 @@ angular.module('quienPagaApp')
         }else{
           newHash=hash[0] + selectType + '=' + newVal + '&agruparpor=' + groupby;
         }
-       
-        $state.go('/',{search:newHash});
+      }else if (newVal===''){
+
+        if (hash[0] !== '/'){
+          var aux3=hash[0].split('/');
+          hash[0]=aux3[aux3.length-1];
+          angular.forEach(hash, function(value){
+            var aux2=value.split('=');
+            if (angular.lowercase(aux2[0])!==angular.lowercase('origen') && angular.lowercase(aux2[0]) !==angular.lowercase('concepto')){
+              if (newHash !== ''){
+                newHash+= '&'  + value;
+              }else{
+                newHash+=value;
+              }
+            }
+          });
+        }
+        $scope.filtro.origen=newVal;
+        $scope.filtro.concepto=newVal;
       }
+      
+      $location.path(newHash);
+      $scope.Grafica();
+      console.log($scope.filtro);
     });
 
     $scope.$watch('SelectPartidoSector',function(newVal,oldVal){
-      if (angular.isDefined(newVal) && newVal!==oldVal){
-        var url= decodeURIComponent(window.location.hash);
-        var hash= (url.split('#'))[1].split('&');
-        console.log(hash);
-        var newHash='';
+      var url= decodeURIComponent(window.location.hash);
+      var hash= (url.split('#'))[1].split('&');
+      console.log(hash);
+      var newHash='';
+      if (angular.isDefined(newVal) && newVal!=='' && newVal!==oldVal){
         var selectType='Partido';
         var groupby='Sector';
         var toRemove='Sector';
-
         var type= document.getElementById(newVal.replace(' ','_')).getAttribute('partido');
         console.log(type);
         if (angular.lowercase(type) === 'false'){ //SECTOR
           selectType='Sector';
           groupby='Jurisdiccion';
           toRemove='Partido';
+          $scope.filtro.sector=newVal;
+        }else{
+          $scope.filtro.partido=newVal;
         }
 
         if (hash[0] !== '/'){
@@ -313,9 +458,27 @@ angular.module('quienPagaApp')
         }else{
           newHash=hash[0] + selectType + '=' + newVal + '&agruparpor=' + groupby;
         }
-       
-        $state.go('/',{search:newHash});
+      }else if (newVal===''){
+        if (hash[0] !== '/'){
+          var aux3=hash[0].split('/');
+          hash[0]=aux3[aux3.length-1];
+          angular.forEach(hash, function(value){
+            var aux2=value.split('=');
+            if (angular.lowercase(aux2[0])!==angular.lowercase('partido') && angular.lowercase(aux2[0]) !==angular.lowercase('sector')){
+              if (newHash !== ''){
+                newHash+= '&'  + value;
+              }else{
+                newHash+=value;
+              }
+            }
+          });
+        }
+        $scope.filtro.partido=newVal;
+        $scope.filtro.sector=newVal;
       }
+
+      $location.path(newHash);
+      $scope.Grafica();
     });
  
   });

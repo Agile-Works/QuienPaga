@@ -9,29 +9,14 @@ angular
   ])
   .config(function ($stateProvider) {
  
-   // $urlRouterProvider.otherwise('/');
+    //$urlRouterProvider.otherwise('/');
 
     $stateProvider
       .state('/', {
-        url:'/:search',
+        url:'/',
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       });
-      /*.state('partido', {
-        url:'/partido/:id',
-        templateUrl: 'views/partido.html',
-        controller: 'PorPartidoCtrl'
-      })
-      .state('origen', {
-        url:'/origen/:id/:type',
-        templateUrl: 'views/origen.html',
-        controller: 'PorOrigenCtrl'
-      })
-      .state('contribuyente', {
-        url:'/contribuyente/:nombre',
-        templateUrl: 'views/contribuyente.html',
-        controller: 'PorContribuyenteCtrl'
-      });*/
   });
 
 angular.module('quienPagaApp').run(['uiSelect2Config', function(uiSelect2Config) {
