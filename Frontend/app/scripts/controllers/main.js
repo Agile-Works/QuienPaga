@@ -116,6 +116,7 @@ angular.module('quienPagaApp')
 
     $scope.Grafica=function(){
       $scope.displayGif=true;
+      var dataArray=[];
       DataService.GetAll($scope.filtro).then(function(response){
         var chartdata=[['Nombre','Montos']];
         var groupby='';
@@ -166,6 +167,32 @@ angular.module('quienPagaApp')
           aux.push(sum);
           this.push(aux);
         }, chartdata);
+
+        //Agarro los primeros 15
+        
+        var cant=dataArray.length;
+        console.log(cant-15);
+        if (cant > 15){
+          var otros=[];
+          otros.push('Otros');
+          otros.push(0);
+          var auxChartData=[['Nombre','Montos']];
+          var i=0;
+          angular.forEach(dataArray, function(value){
+            if (i >=15){
+              otros[1]+=value[1];
+            }else{
+              auxChartData.push(value);
+            }
+            i++;
+          });
+       //   console.log(chartdata);
+          auxChartData.push(otros);
+          chartdata=auxChartData;
+          //chartdata=auxChartData;
+         // console.log(auxChartData);
+        }
+
         var MainChart = {};
         MainChart.methods={};
         MainChart.type = 'PieChart';
