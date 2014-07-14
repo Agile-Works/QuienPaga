@@ -21,31 +21,31 @@ angular.module("views/contribuyente.html", []).run(["$templateCache", function($
 
 angular.module("views/main.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("views/main.html",
-    "<div class=\"body\">\n" +
+    "<div class=\"body\" style=\"font-family:'Exo 2',sans-serif;font-size:14px;\">\n" +
     "<div id=\"subHeader\">\n" +
-    "  <div id=\"search\" style=\"margin:auto;width:895px;height:50px\">\n" +
-    "    <select ui-select2=\"\" ng-model=\"SelectPartidoSector\" data-placeholder=\"Partidos o Sectores...\" style=\"width:280px\">\n" +
+    "  <div id=\"search\" style=\"margin:0 auto;width:100%;max-width:1024px;height:50px;text-align:center;\">\n" +
+    "    <select ui-select2=\"\" ng-model=\"SelectPartidoSector\" data-placeholder=\"Partidos o Sectores...\" style=\"width:280px;margin:5px auto\">\n" +
     "      <option></option>\n" +
     "      <option ng-repeat=\"item in Selectores.partidosector\" id=\"{{item.name.replace(' ','_')}}\" value=\"{{item.name}}\" partido=\"{{item.isPartido}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
-    "     <select ui-select2=\"\" ng-model=\"SelectJurisdiccion\" data-placeholder=\"Jurisdicción...\" style=\"width:150px\">\n" +
+    "     <select ui-select2=\"\" ng-model=\"SelectJurisdiccion\" data-placeholder=\"Jurisdicción...\" style=\"width:150px;margin:5px auto\">\n" +
     "      <option></option>\n" +
     "      <option ng-repeat=\"item in Selectores.jurisdiccion\" value=\"{{item.Jurisdiccion}}\">{{item.Jurisdiccion}}</option>\n" +
     "    </select>\n" +
-    "     <select ui-select2=\"\" ng-model=\"SelectOrigenConcepto\" data-placeholder=\"Origen o Concepto...\" style=\"width:240px\">\n" +
+    "     <select ui-select2=\"\" ng-model=\"SelectOrigenConcepto\" data-placeholder=\"Origen o Concepto...\" style=\"width:240px;margin:5px auto\">\n" +
     "      <option></option>\n" +
     "      <option ng-repeat=\"item in Selectores.origenconcepto\" id=\"{{item.name.replace(' ','_')}}\" value=\"{{item.name}}\" origen=\"{{item.isOrigen}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
-    "     <select ui-select2=\"\" ng-model=\"SelectDonante\" data-placeholder=\"Donante...\" style=\"width:210px\">\n" +
+    "     <select ui-select2=\"\" ng-model=\"SelectDonante\" data-placeholder=\"Donante...\" style=\"width:210px;margin:5px auto\">\n" +
     "      <option></option>\n" +
     "      <option ng-repeat=\"item in Selectores.donante | groupBy:'name'\" value=\"{{item.name}}\">{{item.name}}</option>\n" +
     "    </select>\n" +
     "  </div>\n" +
     "</div>\n" +
     "<div id=\"subBody\" style=\"margin-top:40px;\">\n" +
-    "  <div id=\"container\"  style=\"width:1024px;margin:auto\">\n" +
-    "    <div id=\"left\" style=\"width:400px !important;display:inline-block;\">\n" +
-    "      <table  style=\"margin-left:150px\">\n" +
+    "  <div id=\"container\"  style=\"width:100%;max-width: 1024px;margin:auto\">\n" +
+    "    <div id=\"left\" style=\"width:50%;float:left;vertical-align:top;min-width:320px;margin:0 auto\">\n" +
+    "      <table  style=\"width:300px; margin: 0 auto;\">\n" +
     "       <tr>\n" +
     "         <th>Agrupar por:</th>\n" +
     "         <th></th>\n" +
@@ -75,10 +75,10 @@ angular.module("views/main.html", []).run(["$templateCache", function($templateC
     "      </table>\n" +
     "      </div>  \n" +
     "      <p ng-show=\"displayGif\" style=\"width: 70px; margin:70px auto;\"><img src=\"/Portals/_Sudestada/QuienPaga/scripts/wait.GIF\"></p>\n" +
-    "      <div id=\"right\" style=\"width: 600px;display:inline-block; margin:auto;\">  \n" +
-    "        <div google-chart chart=\"chart\" select=\"onSelectRowFunction(selectedItem)\" class=\"grafica\" style=\"padding:0;width:400px;margin:auto\"></div>\n" +
-    "        <div id=\"table\">\n" +
-    "        \n" +
+    "      <div id=\"right\" style=\"width:50%;float:left; margin:auto;min-width:320px;margin:0 auto\">  \n" +
+    "        <div google-chart chart=\"chart\" select=\"onSelectRowFunction(selectedItem)\" class=\"grafica\" style=\"padding:0;width:100%;margin:0 auto\"></div>\n" +
+    "        <div id=\"table\" style=\"margin-top:30px;\" ng-show=\"displayTable\">\n" +
+    "          <div class=\"gridStyle\" ng-grid=\"gridOptions\"></div>\n" +
     "        </div>\n" +
     "      </div>  \n" +
     "    </div>\n" +

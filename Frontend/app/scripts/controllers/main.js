@@ -2,7 +2,9 @@
 
 angular.module('quienPagaApp')
   .controller('MainCtrl', function ($scope,$http,DataService,$stateParams, $state,$filter,$location) {
-    
+    $scope.myData=[];
+    $scope.gridOptions = { data: 'myData' };
+    $scope.displayTable=false;
     //$scope.filtro
     $scope.filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
     console.log($location);
@@ -49,6 +51,7 @@ angular.module('quienPagaApp')
 
     $scope.displayGif=true;
     DataService.GetAll($scope.filtro).then(function(response){
+      $scope.displayTable=false;
       var chartdata=[['Nombre','Montos']];
       var groupby='';
       angular.forEach($filter('groupBy')(response,$scope.filtro.agruparpor), function(value){
@@ -116,8 +119,11 @@ angular.module('quienPagaApp')
 
     $scope.Grafica=function(){
       $scope.displayGif=true;
+      $scope.displayTable=false;
       var dataArray=[];
+      var gridData=[];
       DataService.GetAll($scope.filtro).then(function(response){
+        gridData=response;
         var chartdata=[['Nombre','Montos']];
         var groupby='';
         angular.forEach($filter('groupBy')(response,$scope.filtro.agruparpor), function(value){
@@ -166,10 +172,10 @@ angular.module('quienPagaApp')
           aux.push(groupby);
           aux.push(sum);
           this.push(aux);
+          dataArray.push(aux);
         }, chartdata);
 
         //Agarro los primeros 15
-        
         var cant=dataArray.length;
         console.log(cant-15);
         if (cant > 15){
@@ -184,13 +190,18 @@ angular.module('quienPagaApp')
             }else{
               auxChartData.push(value);
             }
+            var dato={'Nombre':value[0],'Monto':value[1]};
+            $scope.myData.push(dato);
             i++;
           });
-       //   console.log(chartdata);
           auxChartData.push(otros);
           chartdata=auxChartData;
-          //chartdata=auxChartData;
-         // console.log(auxChartData);
+          $scope.gridOptions = { data: 'myData' };
+          $scope.displayTable=true;
+        }else{
+          $scope.myData=[];
+          $scope.displayTable=false;
+          $scope.gridOptions = { data: 'myData' };
         }
 
         var MainChart = {};

@@ -6,6 +6,7 @@ angular
     'ui.router',
     'googlechart',
     'ui.select2',
+    'ngGrid'
   ])
   .config(function ($stateProvider) {
  
