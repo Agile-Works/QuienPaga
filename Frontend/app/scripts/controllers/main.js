@@ -1,15 +1,21 @@
 'use strict';
 
 angular.module('quienPagaApp')
-  .controller('MainCtrl', function ($scope,$http,DataService,$stateParams, $state,$filter,$location) {
+  .controller('MainCtrl', function ($scope,$http,DataService,$filter,$location) {
+
+
     $scope.myData=[];
     $scope.gridOptions = { data: 'myData' };
     $scope.displayTable=false;
     //$scope.filtro
     $scope.filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
     console.log($location);
-    if (angular.isDefined($stateParams.search) && $stateParams.search !==''){
-      angular.forEach($stateParams.search.split('&'), function(value){
+    
+    if (window.location.hash.indexOf('#') === -1){
+      $location.path('/#/');
+    }else{
+      var url=window.location.hash.split('/')[1];
+      angular.forEach(url.split('&'), function(value){
         var param= value.split('=');
         if (param[0].indexOf('/') !== -1){
           var aux= param[0].split('/');
@@ -160,10 +166,10 @@ angular.module('quienPagaApp')
               groupby=value.Donante;
               break;
             case 'concepto':
-              angular.forEach($filter('filter')(response,{'Concepto':value.Donante}), function(value2){
+              angular.forEach($filter('filter')(response,{'Concepto':value.Concepto}), function(value2){
                 sum+=value2.Monto;
               });
-              groupby=value.Donante;
+              groupby=value.Concepto;
               break;
           }
           
@@ -172,7 +178,10 @@ angular.module('quienPagaApp')
           aux.push(groupby);
           aux.push(sum);
           this.push(aux);
-          dataArray.push(aux);
+          if (sum > 0){
+            dataArray.push(aux);
+          }
+          
         }, chartdata);
 
         //Agarro los primeros 15

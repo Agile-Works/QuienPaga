@@ -3,12 +3,12 @@
 angular
   .module('quienPagaApp', [
     'templates-main',
-    'ui.router',
+    
     'googlechart',
     'ui.select2',
     'ngGrid'
-  ])
-  .config(function ($stateProvider) {
+  ]);
+ /* .config(function ($stateProvider) {
  
     //$urlRouterProvider.otherwise('/');
 
@@ -18,7 +18,7 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       });
-  });
+  });*/
 
 /*.config(function ($routeProvider) {
     $routeProvider
