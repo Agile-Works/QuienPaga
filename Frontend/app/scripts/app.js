@@ -58,7 +58,7 @@ angular.module('quienPagaApp').run(['uiSelect2Config', function(uiSelect2Config)
         ret='<b>' + option.text + '</b>';
         break;
       default:
-        ret='&nbsp' + option.text;
+        ret='&nbsp;&nbsp;&nbsp;' + option.text;
     }
     return ret;
   };

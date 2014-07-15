@@ -2,7 +2,7 @@
 
 angular.module('quienPagaApp')
   .service('DataService', function($http,$filter) {
-  var ApiUrl='http://www.quienpaga.local/api/Main/';
+  var ApiUrl='http://sudestadaapi.agileworks.net/api/Main/';
   var select2Data=[];
   var jsonData=[];
   var partidosector=[];
