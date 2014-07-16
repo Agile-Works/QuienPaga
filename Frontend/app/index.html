@@ -8,7 +8,7 @@
 
     <div class="body" style="font-family:'Exo 2',sans-serif;font-size:14px;" >
         <div id="subHeader">
-          <div id="search" style="margin:0 auto;width:100%;max-width:1024px;height:50px;text-align:center;">{{SelectPartidoSector}}
+          <div id="search" style="margin:0 auto;width:100%;max-width:1024px;height:50px;text-align:center;">
             <select ui-select2 id="SelectPartidoSector" ng-model="SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px;margin:10px auto">
               <option></option>
               <option ng-repeat="item in Selectores.partidosector" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" partido="{{item.isPartido}}" parent="{{item.partido}}">{{item.name}}</option>
