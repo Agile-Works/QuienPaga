@@ -3,14 +3,10 @@
 angular.module('quienPagaApp')
   .controller('MainCtrl', function ($scope,$http,DataService,$filter,$location) {
 
-
     $scope.myData=[];
     $scope.gridOptions = { data: 'myData' };
     $scope.displayTable=false;
-    //$scope.filtro
     $scope.filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
-    console.log($location);
-    
     if (window.location.hash.indexOf('#') === -1){
       $location.path('/#/');
     }else{
@@ -25,29 +21,29 @@ angular.module('quienPagaApp')
         switch(angular.lowercase(decodeURIComponent(param[0]))) {
           case 'partido':
             $scope.filtro.partido=decodeURIComponent(param[1]);
-            $scope.SelectPartidoSector=[$scope.filtro.partido];
+            $scope.SelectPartidoSector=$scope.filtro.partido;
+            console.log($scope.SelectPartidoSector);
             break;
           case 'sector':
             $scope.filtro.sector=decodeURIComponent(param[1]);
-            $scope.SelectPartidoSector=[decodeURIComponent(param[1])];
+            $scope.SelectPartidoSector=decodeURIComponent(param[1]);
             console.log($scope.SelectPartidoSector);
             break;
           case 'concepto':
             $scope.filtro.concepto=decodeURIComponent(param[1]);
-            $scope.SelectOrigenConcepto=[decodeURIComponent(param[1])];
-
+            $scope.SelectOrigenConcepto=decodeURIComponent(param[1]);
             break;
           case 'origen':
             $scope.filtro.origen=decodeURIComponent(param[1]);
-            $scope.SelectOrigenConcepto=[decodeURIComponent(param[1])];
+            $scope.SelectOrigenConcepto=decodeURIComponent(param[1]);
             break;
           case 'jurisdiccion':
             $scope.filtro.jurisdiccion=decodeURIComponent(param[1]);
-            $scope.SelectJurisdiccion=[decodeURIComponent(param[1])];
+            $scope.SelectJurisdiccion=decodeURIComponent(param[1]);
             break;
           case 'donante':
             $scope.filtro.donante=decodeURIComponent(param[1]);
-            $scope.SelectDonante=[decodeURIComponent(param[1])];
+            $scope.SelectDonante=decodeURIComponent(param[1]);
             break;
           case 'agruparpor':
             $scope.filtro.agruparpor=decodeURIComponent(param[1]);
@@ -55,77 +51,11 @@ angular.module('quienPagaApp')
       });
     }
 
-    $scope.displayGif=true;
-    DataService.GetAll($scope.filtro).then(function(response){
-      $scope.displayTable=false;
-      var chartdata=[['Nombre','Montos']];
-      var groupby='';
-      angular.forEach($filter('groupBy')(response,$scope.filtro.agruparpor), function(value){
-        var sum= 0;
-        switch(angular.lowercase($scope.filtro.agruparpor)){
-          case 'partido':
-            angular.forEach($filter('filter')(response,{'Partido':value.Partido}), function(value2){
-              sum+=value2.Monto;
-            });
-            groupby=value.Partido;
-            break;
-          case 'sector':
-            angular.forEach($filter('filter')(response,{'Sector':value.Sector}), function(value2){
-              sum+=value2.Monto;
-            });
-            groupby=value.Sector;
-            break;
-          case 'origen':
-            angular.forEach($filter('filter')(response,{'Origen':value.Origen}), function(value2){
-              sum+=value2.Monto;
-            });
-            groupby=value.Origen;
-            break;
-          case 'jurisdiccion':
-            angular.forEach($filter('filter')(response,{'Jurisdiccion':value.Jurisdiccion}), function(value2){
-              sum+=value2.Monto;
-            });
-            groupby=value.Jurisdiccion;
-            break;
-          case 'donante':
-            angular.forEach($filter('filter')(response,{'Donante':value.Donante}), function(value2){
-              sum+=value2.Monto;
-            });
-            groupby=value.Donante;
-            break;
-          case 'concepto':
-            angular.forEach($filter('filter')(response,{'Concepto':value.Donante}), function(value2){
-              sum+=value2.Monto;
-            });
-            groupby=value.Donante;
-            break;
-        }
-       
-        var aux=[];
-        aux.push();
-        aux.push(groupby);
-        aux.push(sum);
-        this.push(aux);
-      }, chartdata);
-
-      var MainChart = {};
-      MainChart.methods={};
-      MainChart.type = 'PieChart';
-      MainChart.data=chartdata;
-      if (angular.lowercase($scope.filtro.agruparpor) === 'partido'){
-        MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: ['#109618','#ff9900','#dc3912','#990099','#3366cc']};
-      }else{
-        MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
-      }
-      
-      MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
-      $scope.chart = MainChart;
-    });
-
-
     $scope.Grafica=function(){
       $scope.displayGif=true;
+      $scope.myData=[];
       $scope.displayTable=false;
+      $scope.gridOptions = { data: 'myData' };
       var dataArray=[];
       var gridData=[];
       DataService.GetAll($scope.filtro).then(function(response){
@@ -218,9 +148,9 @@ angular.module('quienPagaApp')
         MainChart.type = 'PieChart';
         MainChart.data=chartdata;
         if (angular.lowercase($scope.filtro.agruparpor) === 'partido'){
-          MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: ['#109618','#ff9900','#dc3912','#990099','#3366cc']};
+          MainChart.options = {displayExactValues: true,width: 500,height: 220,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: ['#ff9900','#3366cc','#dc3912','#990099','#109618']};
         }else{
-          MainChart.options = {displayExactValues: true,width: 500,height: 200,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
+          MainChart.options = {displayExactValues: true,width: 500,height: 220,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
         }
         
         MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
@@ -234,10 +164,44 @@ angular.module('quienPagaApp')
 
     $scope.Selectores=DataService.GetSelectors($scope.filtro);
 
+    $scope.Grafica();
+
     $scope.displayGif=false;
 
     $scope.onSelectRowFunction = function(selectedItem){
       console.log(selectedItem);
+      if (angular.lowercase($scope.filtro.agruparpor) ==='partido'){
+
+        $scope.SelectPartidoSector=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.filtro.agruparpor='Sector';
+
+      }else if (angular.lowercase($scope.filtro.agruparpor) ==='sector'){
+
+        $scope.SelectPartidoSector=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.filtro.agruparpor='Jurisdiccion';
+
+      }else if (angular.lowercase($scope.filtro.agruparpor) ==='jurisdiccion'){
+
+        $scope.SelectJurisdiccion=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.filtro.agruparpor='Origen';
+
+      }else if (angular.lowercase($scope.filtro.agruparpor) ==='origen'){
+
+        $scope.SelectOrigenConcepto=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.filtro.agruparpor='Concepto';
+
+      }else if (angular.lowercase($scope.filtro.agruparpor) ==='concepto'){
+
+        $scope.SelectOrigenConcepto=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.filtro.agruparpor='Donante';
+
+      }else if (angular.lowercase($scope.filtro.agruparpor) ==='donante'){
+        $scope.SelectDonante=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.filtro.agruparpor='Partido';
+
+      }
+      console.log($scope.chart.data[selectedItem.row + 1][0]);
+
    //   $state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
     };
 
@@ -275,6 +239,8 @@ angular.module('quienPagaApp')
         }else{
           newHash=hash[0] + 'Jurisdiccion=' + newVal + '&agruparpor=partido';
         }
+        $location.path(newHash);
+
       }else if (newVal ===''){
         if (hash[0] !== '/'){
           var aux2=hash[0].split('/');
@@ -300,9 +266,9 @@ angular.module('quienPagaApp')
             }
           });
         }
+        $location.path(newHash);
       }
       $scope.filtro.jurisdiccion=newVal;
-      $location.path(newHash);
       $scope.Grafica();
     });
 
@@ -326,14 +292,17 @@ angular.module('quienPagaApp')
             newHash+=(newHash !== '')? '&agruparpor=' + newVal : 'agruparpor=' + newVal;
           }
         });
+        $location.path(newHash);
       }else{
         newHash=hash[0] + 'agruparpor=' + newVal;
+        $location.path(newHash);
       }
       $scope.filtro.agruparpor=newVal;
-      $location.path(newHash);
       $scope.Grafica();
   //    $state.go('/',{search:newHash});
     });
+
+
 
     $scope.$watch('SelectDonante',function(newVal,oldVal){
       console.log('newVal');
@@ -369,6 +338,7 @@ angular.module('quienPagaApp')
         }else{
           newHash=hash[0] + 'Donante=' + newVal + '&agruparpor=partido';
         }
+        $location.path(newHash);
       }else if (newVal ===''){
         if (hash[0] !== '/'){
           var aux2=hash[0].split('/');
@@ -394,9 +364,9 @@ angular.module('quienPagaApp')
             }
           });
         }
+        $location.path(newHash);
       }
       $scope.filtro.donante=newVal;
-      $location.path(newHash);
       $scope.Grafica();
     });
 
@@ -446,6 +416,7 @@ angular.module('quienPagaApp')
         }else{
           newHash=hash[0] + selectType + '=' + newVal + '&agruparpor=' + groupby;
         }
+        $location.path(newHash);
       }else if (newVal===''){
 
         if (hash[0] !== '/'){
@@ -464,9 +435,9 @@ angular.module('quienPagaApp')
         }
         $scope.filtro.origen=newVal;
         $scope.filtro.concepto=newVal;
+        $location.path(newHash);
       }
       
-      $location.path(newHash);
       $scope.Grafica();
       console.log($scope.filtro);
     });
@@ -518,6 +489,7 @@ angular.module('quienPagaApp')
         }else{
           newHash=hash[0] + selectType + '=' + newVal + '&agruparpor=' + groupby;
         }
+        $location.path(newHash);
       }else if (newVal===''){
         if (hash[0] !== '/'){
           var aux3=hash[0].split('/');
@@ -535,9 +507,9 @@ angular.module('quienPagaApp')
         }
         $scope.filtro.partido=newVal;
         $scope.filtro.sector=newVal;
+        $location.path(newHash);
       }
 
-      $location.path(newHash);
       $scope.Grafica();
     });
  

@@ -8,20 +8,20 @@
 
     <div class="body" style="font-family:'Exo 2',sans-serif;font-size:14px;" >
         <div id="subHeader">
-          <div id="search" style="margin:0 auto;width:100%;max-width:1024px;height:50px;text-align:center;">
-            <select ui-select2="" ng-model="SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px;margin:10px auto">
+          <div id="search" style="margin:0 auto;width:100%;max-width:1024px;height:50px;text-align:center;">{{SelectPartidoSector}}
+            <select ui-select2 id="SelectPartidoSector" ng-model="SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px;margin:10px auto">
               <option></option>
-              <option ng-repeat="item in Selectores.partidosector" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" partido="{{item.isPartido}}">{{item.name}}</option>
+              <option ng-repeat="item in Selectores.partidosector" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" partido="{{item.isPartido}}" parent="{{item.partido}}">{{item.name}}</option>
             </select>
-             <select ui-select2="" ng-model="SelectJurisdiccion" data-placeholder="Jurisdicción..." style="width:150px;margin:10px auto">
+             <select ui-select2 id="SelectJurisdiccion" ng-model="SelectJurisdiccion" data-placeholder="Jurisdicción..." style="width:150px;margin:10px auto">
               <option></option>
               <option ng-repeat="item in Selectores.jurisdiccion" value="{{item.Jurisdiccion}}">{{item.Jurisdiccion}}</option>
             </select>
-             <select ui-select2="" ng-model="SelectOrigenConcepto" data-placeholder="Origen o Concepto..." style="width:240px;margin:10px auto">
+             <select ui-select2 id="SelectOrigenConcepto" ng-model="SelectOrigenConcepto" data-placeholder="Origen o Concepto..." style="width:240px;margin:10px auto">
               <option></option>
-              <option ng-repeat="item in Selectores.origenconcepto" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" origen="{{item.isOrigen}}">{{item.name}}</option>
+              <option ng-repeat="item in Selectores.origenconcepto" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" origen="{{item.isOrigen}}" parent="{{item.origen}}">{{item.name}}</option>
             </select>
-             <select ui-select2="" ng-model="SelectDonante" data-placeholder="Donante..." style="width:210px;margin:10px auto">
+             <select ui-select2 id="SelectDonante" ng-model="SelectDonante" data-placeholder="Donante..." style="width:210px;margin:10px auto">
               <option></option>
               <option ng-repeat="item in Selectores.donante | groupBy:'name'" value="{{item.name}}">{{item.name}}</option>
             </select>
@@ -29,37 +29,15 @@
         </div>
         <div id="subBody" style="margin-top:40px;">
           <div id="container"  style="width:100%;max-width: 1024px;margin:auto">
-            <div id="left" style="width:50%;float:left;vertical-align:top;min-width:320px;margin:0 auto">
-              <table  style="width:300px; margin: 0 auto;">
-               <tr>
-                 <th>Agrupar por:</th>
-                 <th></th>
-               </tr>
-                <tr>
-                  <td>Partido</td>
-                  <td><input type="radio" ng-model="filtro.agruparpor" value="Partido"></td>
-                </tr>
-                <tr>
-                  <td>Sector</td>
-                  <td><input type="radio" ng-model="filtro.agruparpor" value="Sector"></td>
-                </tr>
-                <tr>
-                  <td>Jurisdiccion</td>
-                  <td><input type="radio" ng-model="filtro.agruparpor" value="Jurisdiccion"></td>
-                </tr>
-                <tr>
-                  <td>Origen</td>
-                  <td><input type="radio" ng-model="filtro.agruparpor" value="Origen"></td>
-                </tr>
-                <tr>
-                  <td>Concepto</td>
-                  <td><input type="radio" ng-model="filtro.agruparpor" value="Concepto"></td>
-                </tr>
-                <tr>
-                  <td>Donante</td>
-                  <td><input type="radio" ng-model="filtro.agruparpor" value="Donante"></td>
-                </tr>
-              </table>
+             <div id="left" style="width:50%;float:left;vertical-align:top;min-width:320px;margin:0 auto">
+                <select ui-select2 id="SelectGroupBy" ng-model="filtro.agruparpor" data-placeholder="Agrupar por..." style="width:210px;margin:10px auto">
+                     <option value="Partido">Partido</option>
+                     <option value="Sector">Sector</option>
+                     <option value="Jurisdiccion">Jurisdicci&oacute;n</option>
+                     <option value="Origen">Origen</option>
+                     <option value="Concepto">Concepto</option>
+                     <option value="Donante">Donante</option>
+                </select>
               </div>  
               <p ng-show="displayGif" style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>
               <div id="right" style="width:50%;float:left; margin:auto;min-width:320px;margin:0 auto">  
@@ -71,7 +49,15 @@
             </div>
           </div>
         </div>
+        <input type="hidden" id="filtrosector" value="{{filtro.sector}}">
+        <input type="hidden" id="filtropartido" value="{{filtro.partido}}">
+        <input type="hidden" id="filtroorigen" value="{{filtro.origen}}">
+        <input type="hidden" id="filtrojurisdiccion" value="{{filtro.jurisdiccion}}">
+        <input type="hidden" id="filtroconcepto" value="{{filtro.concepto}}">
+        <input type="hidden" id="filtrodonante" value="{{filtro.donante}}">
     </div>
+
+    
     <!-- build:js scripts/vendor.js -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
