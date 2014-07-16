@@ -9,26 +9,37 @@
     <div class="body" style="font-family:'Exo 2',sans-serif;font-size:14px;" >
         <div id="subHeader">
           <div id="search" style="margin:0 auto;width:100%;max-width:1024px;height:50px;text-align:center;">
-            <select ui-select2 id="SelectPartidoSector" ng-model="SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px;margin:10px auto">
-              <option></option>
-              <option ng-repeat="item in Selectores.partidosector" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" partido="{{item.isPartido}}" parent="{{item.partido}}">{{item.name}}</option>
-            </select>
-             <select ui-select2 id="SelectJurisdiccion" ng-model="SelectJurisdiccion" data-placeholder="Jurisdicción..." style="width:150px;margin:10px auto">
-              <option></option>
-              <option ng-repeat="item in Selectores.jurisdiccion" value="{{item.Jurisdiccion}}">{{item.Jurisdiccion}}</option>
-            </select>
-             <select ui-select2 id="SelectOrigenConcepto" ng-model="SelectOrigenConcepto" data-placeholder="Origen o Concepto..." style="width:240px;margin:10px auto">
-              <option></option>
-              <option ng-repeat="item in Selectores.origenconcepto" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" origen="{{item.isOrigen}}" parent="{{item.origen}}">{{item.name}}</option>
-            </select>
-             <select ui-select2 id="SelectDonante" ng-model="SelectDonante" data-placeholder="Donante..." style="width:210px;margin:10px auto">
-              <option></option>
-              <option ng-repeat="item in Selectores.donante | groupBy:'name'" value="{{item.name}}">{{item.name}}</option>
-            </select>
+            <fieldset>
+                <legend>Buscar</legend>
+                <select ui-select2 id="SelectPartidoSector" ng-model="SelectUI2s.SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px;margin:10px auto">
+                  <option></option>
+                  <option ng-repeat="item in Selectores.partidosector" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" partido="{{item.isPartido}}" parent="{{item.partido}}">{{item.name}}</option>
+                </select>
+                 <select ui-select2 id="SelectJurisdiccion" ng-model="SelectUI2s.SelectJurisdiccion" data-placeholder="Jurisdicción..." style="width:150px;margin:10px auto">
+                  <option></option>
+                  <option ng-repeat="item in Selectores.jurisdiccion" value="{{item.Jurisdiccion}}">{{item.Jurisdiccion}}</option>
+                </select>
+                 <select ui-select2 id="SelectOrigenConcepto" ng-model="SelectUI2s.SelectOrigenConcepto" data-placeholder="Origen o Concepto..." style="width:240px;margin:10px auto">
+                  <option></option>
+                  <option ng-repeat="item in Selectores.origenconcepto" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" origen="{{item.isOrigen}}" parent="{{item.origen}}">{{item.name}}</option>
+                </select>
+                 <select ui-select2 id="SelectDonante" ng-model="SelectUI2s.SelectDonante" data-placeholder="Donante..." style="width:210px;margin:10px auto">
+                  <option></option>
+                  <option ng-repeat="item in Selectores.donante | groupBy:'name'" value="{{item.name}}">{{item.name}}</option>
+                </select>                
+            </fieldset>
           </div>
         </div>
         <div id="subBody" style="margin-top:40px;">
-          <div id="container"  style="width:100%;max-width: 1024px;margin:auto">
+          <div id="container"  style="width:100%;max-width: 1024px;margin:auto;overflow:hidden;">
+              <p ng-show="displayGif" style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>
+              <div id="right" style="width:50%;float:left; margin:auto;min-width:320px;margin:0 auto">  
+                <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="height:230px;padding:0;width:100%;margin:0 auto"></div>
+                <div id="table" style="margin-top:30px;" ng-show="displayTable">
+                  <div class="gridStyle" ng-grid="gridOptions"></div>
+                </div>
+              </div>
+
              <div id="left" style="width:50%;float:left;vertical-align:top;min-width:320px;margin:0 auto">
                 <select ui-select2 id="SelectGroupBy" ng-model="filtro.agruparpor" data-placeholder="Agrupar por..." style="width:210px;margin:10px auto">
                      <option value="Partido">Partido</option>
@@ -38,14 +49,7 @@
                      <option value="Concepto">Concepto</option>
                      <option value="Donante">Donante</option>
                 </select>
-              </div>  
-              <p ng-show="displayGif" style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>
-              <div id="right" style="width:50%;float:left; margin:auto;min-width:320px;margin:0 auto">  
-                <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="height:230px;padding:0;width:100%;margin:0 auto"></div>
-                <div id="table" style="margin-top:30px;" ng-show="displayTable">
-                  <div class="gridStyle" ng-grid="gridOptions"></div>
-                </div>
-              </div>  
+              </div>                 
             </div>
           </div>
         </div>

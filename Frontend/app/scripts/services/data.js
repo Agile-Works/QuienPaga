@@ -49,20 +49,31 @@ angular.module('quienPagaApp')
     //Partido sector
     angular.forEach($filter('groupBy')(response.data,'Partido'), function(value){
       var dato={'name' : value.Partido, 'isPartido':'true', 'partido':value.Partido};
-      partidosector.push(dato);
+      if (dato.name !=='' && dato.name!==null){
+        partidosector.push(dato);
+      }
       angular.forEach($filter('groupBy')($filter('filter')(response.data,{'Partido':value.Partido}),'Sector'), function(value2){
         var dato2={'name' : value2.Sector, 'isPartido':'false',  'partido':value2.Partido};
-        partidosector.push(dato2);
+        if (dato2.name !==''  && dato2.name!==null){
+          partidosector.push(dato2);
+        }
+        
       });
     });
     partidosector= $filter('unique')(partidosector,name);
+
     //Origen concepto
     angular.forEach($filter('groupBy')(response.data,'Origen'), function(value){
       var dato={'name' : value.Origen, 'isOrigen':'true', 'origen':value.Origen};
-      origenconcepto.push(dato);
+      if (dato.name!==null && dato.name!==''){
+        origenconcepto.push(dato);
+      }
       angular.forEach($filter('groupBy')($filter('filter')(response.data,{'Origen':value.Origen}),'Concepto'), function(value2){
         var dato2={'name' : value2.Concepto, 'isOrigen':'false', 'origen':value2.Origen};
-        origenconcepto.push(dato2);
+        if (dato2.name!==null && dato2.name!==''){
+          origenconcepto.push(dato2);
+        }
+        
       });
     });
 
@@ -73,7 +84,9 @@ angular.module('quienPagaApp')
     angular.forEach($filter('groupBy')(response.data,'Donante'), function(value){
       angular.forEach($filter('groupBy')($filter('filter')(response.data,{'Donante':value.Donante}),'Partido'), function(value2){
         var dato2={'name' : value2.Donante, 'partido':value2.Partido, 'origen':value2.Origen, 'concepto':value2.Concepto, 'sector':value2.Sector};
-        donante.push(dato2);
+        if (dato2.name!==null && dato2.name!==''){
+          donante.push(dato2);
+        }
       });
     });
 
@@ -81,7 +94,9 @@ angular.module('quienPagaApp')
 
     //Jurisdiccion
     angular.forEach($filter('groupBy')(response.data,'Jurisdiccion'), function(value){
-      jurisdiccion.push(value);
+      if (value.Jurisdiccion!==null && value.Jurisdiccion!==''){
+        jurisdiccion.push(value);
+      }
     });
 
     jurisdiccion=$filter('unique')(jurisdiccion);

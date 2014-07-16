@@ -2,8 +2,8 @@
 
 angular.module('quienPagaApp')
   .controller('MainCtrl', function ($scope,$http,DataService,$filter,$location) {
-
     $scope.myData=[];
+    $scope.SelectUI2s={SelectPartidoSector:undefined, SelectJurisdiccion:undefined, SelectOrigenConcepto:undefined, SelectDonante:undefined};
     $scope.gridOptions = { data: 'myData' };
     $scope.displayTable=false;
     $scope.filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
@@ -21,29 +21,21 @@ angular.module('quienPagaApp')
         switch(angular.lowercase(decodeURIComponent(param[0]))) {
           case 'partido':
             $scope.filtro.partido=decodeURIComponent(param[1]);
-            $scope.SelectPartidoSector=$scope.filtro.partido;
-            console.log($scope.SelectPartidoSector);
             break;
           case 'sector':
             $scope.filtro.sector=decodeURIComponent(param[1]);
-            $scope.SelectPartidoSector=decodeURIComponent(param[1]);
-            console.log($scope.SelectPartidoSector);
             break;
           case 'concepto':
             $scope.filtro.concepto=decodeURIComponent(param[1]);
-            $scope.SelectOrigenConcepto=decodeURIComponent(param[1]);
             break;
           case 'origen':
             $scope.filtro.origen=decodeURIComponent(param[1]);
-            $scope.SelectOrigenConcepto=decodeURIComponent(param[1]);
             break;
           case 'jurisdiccion':
             $scope.filtro.jurisdiccion=decodeURIComponent(param[1]);
-            $scope.SelectJurisdiccion=decodeURIComponent(param[1]);
             break;
           case 'donante':
             $scope.filtro.donante=decodeURIComponent(param[1]);
-            $scope.SelectDonante=decodeURIComponent(param[1]);
             break;
           case 'agruparpor':
             $scope.filtro.agruparpor=decodeURIComponent(param[1]);
@@ -164,9 +156,26 @@ angular.module('quienPagaApp')
 
     $scope.Selectores=DataService.GetSelectors($scope.filtro);
 
+
     $scope.Grafica();
 
     $scope.displayGif=false;
+
+    if ($scope.filtro.partido !==''){
+      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.partido;
+    }else{
+      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.sector;
+
+    }
+
+    if ($scope.filtro.origen !==''){
+      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.origen;
+    }else{
+      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.concepto;
+    }
+
+    $scope.SelectUI2s.SelectJurisdiccion=$scope.filtro.jurisdiccion;
+    $scope.SelectUI2s.SelectDonante=$scope.filtro.donante;
 
     $scope.onSelectRowFunction = function(selectedItem){
       console.log(selectedItem);
@@ -205,7 +214,7 @@ angular.module('quienPagaApp')
    //   $state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
     };
 
-    $scope.$watch('SelectJurisdiccion',function(newVal,oldVal){
+    $scope.$watch('SelectUI2s.SelectJurisdiccion',function(newVal,oldVal){
       console.log('newVal');
       console.log(newVal);
       var url= decodeURIComponent(window.location.hash);
@@ -304,7 +313,7 @@ angular.module('quienPagaApp')
 
 
 
-    $scope.$watch('SelectDonante',function(newVal,oldVal){
+    $scope.$watch('SelectUI2s.SelectDonante',function(newVal,oldVal){
       console.log('newVal');
       console.log(newVal);
       var url= decodeURIComponent(window.location.hash);
@@ -370,7 +379,7 @@ angular.module('quienPagaApp')
       $scope.Grafica();
     });
 
-    $scope.$watch('SelectOrigenConcepto',function(newVal,oldVal){
+    $scope.$watch('SelectUI2s.SelectOrigenConcepto',function(newVal,oldVal){
       var url= decodeURIComponent(window.location.hash);
       var hash= (url.split('#'))[1].split('&');
       var newHash='';
@@ -442,7 +451,7 @@ angular.module('quienPagaApp')
       console.log($scope.filtro);
     });
 
-    $scope.$watch('SelectPartidoSector',function(newVal,oldVal){
+    $scope.$watch('SelectUI2s.SelectPartidoSector',function(newVal,oldVal){
       var url= decodeURIComponent(window.location.hash);
       var hash= (url.split('#'))[1].split('&');
       console.log(hash);
