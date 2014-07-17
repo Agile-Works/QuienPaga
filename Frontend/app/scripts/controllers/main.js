@@ -111,7 +111,6 @@ angular.module('quienPagaApp')
 
         //Agarro los primeros 15
         var cant=dataArray.length;
-        console.log(cant-15);
         if (cant > 15){
           var otros=[];
           otros.push('Otros');
@@ -160,7 +159,6 @@ angular.module('quienPagaApp')
     $scope.displayGif=false;
 
     $scope.onSelectRowFunction = function(selectedItem){
-      console.log(selectedItem);
       if (angular.lowercase($scope.filtro.agruparpor) ==='partido'){
 
         $scope.SelectUI2s.SelectPartidoSector=$scope.chart.data[selectedItem.row + 1][0];
@@ -198,8 +196,6 @@ angular.module('quienPagaApp')
     };
 
     $scope.$watch('SelectUI2s.SelectJurisdiccion',function(newVal){
-      console.log('newVal');
-      console.log(newVal);
       var url= decodeURIComponent(window.location.hash);
       var hash=[];
       var newHash='';
@@ -300,8 +296,6 @@ angular.module('quienPagaApp')
 
 
     $scope.$watch('SelectUI2s.SelectDonante',function(newVal){
-      console.log('newVal');
-      console.log(newVal);
       var url= decodeURIComponent(window.location.hash);
       var hash=[];
       var newHash='';
@@ -450,7 +444,6 @@ angular.module('quienPagaApp')
       }
       
       $scope.Grafica();
-      console.log($scope.filtro);
     });
 
     $scope.$watch('SelectUI2s.SelectPartidoSector',function(newVal){
@@ -458,7 +451,6 @@ angular.module('quienPagaApp')
         newVal=newVal[0];
       }
       var url= decodeURIComponent(window.location.hash);
-      console.log(url);
       var hash=[];
       var newHash='';
       if (angular.isDefined(newVal) && newVal!=='' && newVal[0]!=='' && document.getElementById(newVal.replace(' ','_'))!==null ){
@@ -467,12 +459,8 @@ angular.module('quienPagaApp')
         var selectType='Partido';
         var groupby='Sector';
         var toRemove='Sector';
-        console.log('newval:');
-        console.log(newVal);
-        console.log(document.getElementById(newVal.replace(' ','_')));
 
         var type= document.getElementById(newVal.replace(' ','_')).getAttribute('partido');
-        console.log(document.getElementById(newVal.replace(' ','_')).getAttribute('parent'));
         if (angular.lowercase(type) === 'false'){ //SECTOR
           selectType='Sector';
           groupby='Jurisdiccion';

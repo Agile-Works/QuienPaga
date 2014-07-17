@@ -45,20 +45,15 @@ angular.module('quienPagaApp').run(['uiSelect2Config', function(uiSelect2Config)
   };
 
   uiSelect2Config.formatSelection= function(option,container){
-    console.log(container.context.attributes.id.value);
-
     if (angular.isDefined(container.context.attributes.id.value)){
       var ret='';
       var stylefront='<span style="color:#7D1634; font-weight:900;font-size: 16px;">';
       var styleback='</span>';
-      console.log(container.context.attributes.id.value);
       switch(container.context.attributes.id.value){
         case 's2id_SelectPartidoSector':
-          console.log(document.getElementById(option.text.replace(' ','_')));
           if ((option.text ==='' ||option.text ===null) && document.getElementById('filtropartido').getAttribute('value') !==''){
             ret=stylefront + document.getElementById('filtropartido').getAttribute('value') + styleback;
           }else if((option.text ==='' ||option.text ===null) && document.getElementById('filtrosector').getAttribute('value') !==''){
-            console.log(document.getElementById('filtrosector').getAttribute('value'));
             ret=stylefront + document.getElementById('filtrosector').getAttribute('value') + styleback;
           }else if (document.getElementById(option.text.replace(' ','_'))!==null && document.getElementById(option.text.replace(' ','_')).getAttribute('partido')==='false'){
             ret=stylefront + document.getElementById(option.text.replace(' ','_')).getAttribute('parent') + ' - ' + option.text + styleback;
@@ -102,12 +97,4 @@ angular.module('quienPagaApp').run(['uiSelect2Config', function(uiSelect2Config)
     }
   };
 
-  uiSelect2Config.initSelection= function(element, callback) {
-    // the input tag has a value attribute preloaded that points to a preselected movie's id
-    // this function resolves that id attribute to an object that select2 can render
-    // using its formatResult renderer - that way the movie name is shown preselected
-    console.log(element);
-    console.log(callback);
-  };
-  
 }]);
