@@ -8,28 +8,6 @@ angular
     'ui.select2',
     'ngGrid'
   ]);
- /* .config(function ($stateProvider) {
- 
-    //$urlRouterProvider.otherwise('/');
-
-    $stateProvider
-      .state('/', {
-        url:'/',
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      });
-  });*/
-
-/*.config(function ($routeProvider) {
-    $routeProvider
-    .when('/', {
-      templateUrl: 'index.html',
-      controller: 'MainCtrl'
-    })
-    .otherwise({
-      redirectTo: '/'
-    });
-  });*/
 
 angular.module('quienPagaApp').run(['uiSelect2Config', function(uiSelect2Config) {
   uiSelect2Config.allowClear = true;

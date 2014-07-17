@@ -3,7 +3,7 @@
 angular.module('quienPagaApp')
   .controller('MainCtrl', function ($scope,$http,DataService,$filter,$location) {
     $scope.myData=[];
-    $scope.SelectUI2s={SelectPartidoSector:undefined, SelectJurisdiccion:undefined, SelectOrigenConcepto:undefined, SelectDonante:undefined};
+    $scope.SelectUI2s={SelectPartidoSector:'', SelectJurisdiccion:'', SelectOrigenConcepto:'', SelectDonante:''};
     $scope.gridOptions = { data: 'myData' };
     $scope.displayTable=false;
     $scope.filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
@@ -162,54 +162,55 @@ angular.module('quienPagaApp')
     $scope.displayGif=false;
 
     if ($scope.filtro.partido !==''){
-      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.partido;
+      $scope.SelectUI2s.SelectPartidoSector=[$scope.filtro.partido];
     }else{
-      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.sector;
+      $scope.SelectUI2s.SelectPartidoSector=[$scope.filtro.sector];
 
     }
 
     if ($scope.filtro.origen !==''){
-      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.origen;
+      $scope.SelectUI2s.SelectOrigenConcepto=[$scope.filtro.origen];
     }else{
-      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.concepto;
+      $scope.SelectUI2s.SelectOrigenConcepto=[$scope.filtro.concepto];
     }
 
-    $scope.SelectUI2s.SelectJurisdiccion=$scope.filtro.jurisdiccion;
-    $scope.SelectUI2s.SelectDonante=$scope.filtro.donante;
+    $scope.SelectUI2s.SelectJurisdiccion=[$scope.filtro.jurisdiccion];
+    $scope.SelectUI2s.SelectDonante=[$scope.filtro.donante];
 
     $scope.onSelectRowFunction = function(selectedItem){
       console.log(selectedItem);
       if (angular.lowercase($scope.filtro.agruparpor) ==='partido'){
 
-        $scope.SelectPartidoSector=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.SelectUI2s.SelectPartidoSector=$scope.chart.data[selectedItem.row + 1][0];
         $scope.filtro.agruparpor='Sector';
 
       }else if (angular.lowercase($scope.filtro.agruparpor) ==='sector'){
 
-        $scope.SelectPartidoSector=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.SelectUI2s.SelectPartidoSector=$scope.chart.data[selectedItem.row + 1][0];
         $scope.filtro.agruparpor='Jurisdiccion';
 
       }else if (angular.lowercase($scope.filtro.agruparpor) ==='jurisdiccion'){
 
-        $scope.SelectJurisdiccion=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.SelectUI2s.SelectJurisdiccion=$scope.chart.data[selectedItem.row + 1][0];
         $scope.filtro.agruparpor='Origen';
 
       }else if (angular.lowercase($scope.filtro.agruparpor) ==='origen'){
 
-        $scope.SelectOrigenConcepto=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.SelectUI2s.SelectOrigenConcepto=$scope.chart.data[selectedItem.row + 1][0];
         $scope.filtro.agruparpor='Concepto';
 
       }else if (angular.lowercase($scope.filtro.agruparpor) ==='concepto'){
 
-        $scope.SelectOrigenConcepto=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.SelectUI2s.SelectOrigenConcepto=$scope.chart.data[selectedItem.row + 1][0];
         $scope.filtro.agruparpor='Donante';
 
       }else if (angular.lowercase($scope.filtro.agruparpor) ==='donante'){
-        $scope.SelectDonante=$scope.chart.data[selectedItem.row + 1][0];
+        $scope.SelectUI2s.SelectDonante=$scope.chart.data[selectedItem.row + 1][0];
         $scope.filtro.agruparpor='Partido';
 
       }
-      console.log($scope.chart.data[selectedItem.row + 1][0]);
+      $scope.SelectUI2s.SelectDonante=$scope.filtro.donante;
+
 
    //   $state.go('partido',{id: $scope.chart.data[selectedItem.row + 1][0]});
     };
@@ -453,8 +454,9 @@ angular.module('quienPagaApp')
 
     $scope.$watch('SelectUI2s.SelectPartidoSector',function(newVal,oldVal){
       var url= decodeURIComponent(window.location.hash);
+      console.log(url);
+
       var hash= (url.split('#'))[1].split('&');
-      console.log(hash);
       var newHash='';
       if (angular.isDefined(newVal) && newVal!=='' && newVal!==oldVal){
         var selectType='Partido';
