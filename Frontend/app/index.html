@@ -12,19 +12,19 @@
           <div id="search" style="margin:0 auto;width:100%;max-width:1024px;height:50px;text-align:center;">
             <fieldset>
                 <legend>Buscar</legend>
-                <select ui-select2 id="SelectPartidoSector" ng-model="SelectUI2s.SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px;margin:10px auto">
+                <select ui-select2="SelectPartidoSectorOptions" id="SelectPartidoSector" ng-model="SelectUI2s.SelectPartidoSector" data-initvalue="SelectUI2s.SelectPartidoSector" data-placeholder="Partidos o Sectores..." style="width:280px;margin:10px auto">
                   <option></option>
                   <option ng-repeat="item in Selectores.partidosector" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" partido="{{item.isPartido}}" parent="{{item.partido}}">{{item.name}}</option>
                 </select>
-                 <select ui-select2 id="SelectJurisdiccion" ng-model="SelectUI2s.SelectJurisdiccion" data-placeholder="Jurisdicción..." style="width:150px;margin:10px auto">
+                 <select ui-select2="" id="SelectJurisdiccion" ng-model="SelectUI2s.SelectJurisdiccion" data-placeholder="Jurisdicción..." style="width:150px;margin:10px auto">
                   <option></option>
                   <option ng-repeat="item in Selectores.jurisdiccion" value="{{item.Jurisdiccion}}">{{item.Jurisdiccion}}</option>
                 </select>
-                 <select ui-select2 id="SelectOrigenConcepto" ng-model="SelectUI2s.SelectOrigenConcepto" data-placeholder="Origen o Concepto..." style="width:240px;margin:10px auto">
+                 <select ui-select2="" id="SelectOrigenConcepto" ng-model="SelectUI2s.SelectOrigenConcepto" data-placeholder="Origen o Concepto..." style="width:240px;margin:10px auto">
                   <option></option>
                   <option ng-repeat="item in Selectores.origenconcepto" id="{{item.name.replace(' ','_')}}" value="{{item.name}}" origen="{{item.isOrigen}}" parent="{{item.origen}}">{{item.name}}</option>
                 </select>
-                 <select ui-select2 id="SelectDonante" ng-model="SelectUI2s.SelectDonante" data-placeholder="Donante..." style="width:210px;margin:10px auto">
+                 <select ui-select2="" id="SelectDonante" ng-model="SelectUI2s.SelectDonante" data-placeholder="Donante..." style="width:210px;margin:10px auto">
                   <option></option>
                   <option ng-repeat="item in Selectores.donante | groupBy:'name'" value="{{item.name}}">{{item.name}}</option>
                 </select>                
@@ -42,7 +42,7 @@
               </div>
 
              <div id="left" style="width:50%;float:left;vertical-align:top;min-width:320px;margin:0 auto">
-                <select ui-select2 id="SelectGroupBy" ng-model="filtro.agruparpor" data-placeholder="Agrupar por..." style="width:210px;margin:10px auto">
+                <select ui-select2="" id="SelectGroupBy" ng-model="filtro.agruparpor" data-placeholder="Agrupar por..." style="width:210px;margin:10px auto">
                      <option value="Partido">Partido</option>
                      <option value="Sector">Sector</option>
                      <option value="Jurisdiccion">Jurisdicci&oacute;n</option>
@@ -60,8 +60,84 @@
         <input type="hidden" id="filtrojurisdiccion" value="{{filtro.jurisdiccion}}">
         <input type="hidden" id="filtroconcepto" value="{{filtro.concepto}}">
         <input type="hidden" id="filtrodonante" value="{{filtro.donante}}">
+        <input type="hidden" id="filtrogroupby" value="{{filtro.agruparpor}}">
+
     </div>
 
+    <script type="text/javascript">
+    (function ($) {
+       /**
+      * @function
+      * @property {object} jQuery plugin which runs handler function once specified element is inserted into the DOM
+      * @param {function} handler A function to execute at the time when the element is inserted
+      * @param {bool} shouldRunHandlerOnce Optional: if true, handler is unbound after its first invocation
+      * @example $(selector).waitUntilExists(function);
+      */
+       
+      $.fn.waitUntilExists  = function (handler, shouldRunHandlerOnce, isChild) {
+        var found = 'found';
+        var $this = $(this.selector);
+        var $elements = $this.not(function () { return $(this).data(found); }).each(handler).data(found, true);
+        
+        if (!isChild)
+        {
+          (window.waitUntilExists_Intervals = window.waitUntilExists_Intervals || {})[this.selector] =
+            window.setInterval(function () { $this.waitUntilExists(handler, shouldRunHandlerOnce, true); }, 500)
+          ;
+        }
+        else if (shouldRunHandlerOnce && $elements.length)
+        {
+          window.clearInterval(window.waitUntilExists_Intervals[this.selector]);
+        }
+        
+        return $this;
+      }
+       
+      }(jQuery));
+
+    $( document ).ready(function(){
+      var stylefront='<span style="color:#7D1634; font-weight:900;font-size: 16px;">';
+      var styleback='</span>';
+      $('#select2-chosen-4').waitUntilExists(function(){
+        $('#filtropartido').waitUntilExists(function(){
+          if ($('#filtropartido').val()!== null && $('#filtropartido').val()!== ''){
+            if ($('#filtrosector').val()!== null && $('#filtrosector').val()!== ''){
+              var text=stylefront + $('#filtropartido').val() + ' - '  + $('#filtrosector').val() + styleback;
+              $('#select2-chosen-1').html(text);
+            }else{
+              var text=stylefront + $('#filtropartido').val() + styleback;
+              $('#select2-chosen-1').html(text);
+            }
+          }
+
+          if ($('#filtrojurisdiccion').val()!== null && $('#filtrojurisdiccion').val()!== ''){
+            var text=stylefront + $('#filtrojurisdiccion').val() + styleback;
+            $('#select2-chosen-2').html(text);
+          }
+
+          if ($('#filtroorigen').val()!== null && $('#filtroorigen').val()!== ''){
+            if ($('#filtroconcepto').val()!== null && $('#filtroconcepto').val()!== ''){
+              var text=stylefront + $('#filtroorigen').val() + ' - '  + $('#filtroconcepto').val() + styleback;
+              $('#select2-chosen-3').html(text);
+            }else{
+              var text=stylefront + $('#filtroorigen').val() + styleback;
+              $('#select2-chosen-3').html(text);
+            }
+          }
+
+          if ($('#filtrodonante').val()!== null && $('#filtrodonante').val()!== ''){
+            var text=stylefront + $('#filtrodonante').val() + styleback;
+            $('#select2-chosen-4').html(text);       
+          }
+
+          if ($('#filtrogroupby').val()!== null && $('#filtrogroupby').val()!== ''){
+            var text=stylefront + 'Agrupar por ' +$('#filtrogroupby').val() + styleback;
+            $('#select2-chosen-5').html(text);       
+          }
+        });
+      });
+    });
+    </script>
     
     <!-- build:js scripts/vendor.js -->
     <script src="bower_components/angular/angular.js"></script>
@@ -84,6 +160,7 @@
     <script src="scripts/services/data.js"></script>
     <script src="views/templates.js"></script>
     <script src="scripts/Filters/filter.js"></script>
+
     <!-- endbuild -->
 
     </div>

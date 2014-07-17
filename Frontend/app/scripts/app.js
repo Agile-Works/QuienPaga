@@ -101,5 +101,13 @@ angular.module('quienPagaApp').run(['uiSelect2Config', function(uiSelect2Config)
       return option.text;
     }
   };
+
+  uiSelect2Config.initSelection= function(element, callback) {
+    // the input tag has a value attribute preloaded that points to a preselected movie's id
+    // this function resolves that id attribute to an object that select2 can render
+    // using its formatResult renderer - that way the movie name is shown preselected
+    console.log(element);
+    console.log(callback);
+  };
   
 }]);

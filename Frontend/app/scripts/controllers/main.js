@@ -23,6 +23,7 @@ angular.module('quienPagaApp')
         switch(angular.lowercase(decodeURIComponent(param[0]))) {
           case 'partido':
             $scope.filtro.partido=decodeURIComponent(param[1]);
+
             break;
           case 'sector':
             $scope.filtro.sector=decodeURIComponent(param[1]);
@@ -384,9 +385,10 @@ angular.module('quienPagaApp')
           groupby='Partido';
           toRemove='Origen';
           $scope.filtro.concepto=newVal;
+          $scope.filtro.origen=document.getElementById(newVal.replace(' ','_')).getAttribute('parent');
         }else{
           $scope.filtro.origen=newVal;
-
+          $scope.filtro.concepto='';
         }
 
         if (hash[0] !== '/'){
@@ -412,9 +414,18 @@ angular.module('quienPagaApp')
               }
             }
           });
-          newHash+=(newHash !=='') ? '&' + selectType + '=' + newVal : selectType + '=' + newVal;
+          if (selectType==='Concepto'){
+            newHash+=(newHash !=='') ? '&' + selectType + '=' + newVal + '&Origen=' +$scope.filtro.origen : selectType + '=' + newVal+'&Origen=' +$scope.filtro.origen;
+          }else{
+            newHash+=(newHash !=='') ? '&' + selectType + '=' + newVal : selectType + '=' + newVal;
+          }
         }else{
-          newHash=hash[0] + selectType + '=' + newVal + '&agruparpor=' + groupby;
+          if (selectType==='Concepto'){
+            newHash=hash[0] + selectType + '=' + newVal  + '&Origen=' +$scope.filtro.origen +'&agruparpor=' + groupby;
+          }else{
+            newHash=hash[0] + selectType + '=' + newVal + '&agruparpor=' + groupby;
+          }
+          
         }
         $location.path(newHash);
       }else if (newVal===''){
@@ -450,7 +461,8 @@ angular.module('quienPagaApp')
       console.log(url);
       var hash=[];
       var newHash='';
-      if (angular.isDefined(newVal) && newVal!=='' && newVal[0]!==''){
+      if (angular.isDefined(newVal) && newVal!=='' && newVal[0]!=='' && document.getElementById(newVal.replace(' ','_'))!==null ){
+
         hash= (url.split('#'))[1].split('&');
         var selectType='Partido';
         var groupby='Sector';
@@ -533,20 +545,18 @@ angular.module('quienPagaApp')
     });
  
     if ($scope.filtro.partido !==''){
-      $scope.SelectUI2s.SelectPartidoSector=[$scope.filtro.partido];
+      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.partido;
     }else{
-      $scope.SelectUI2s.SelectPartidoSector=[$scope.filtro.sector];
-
+      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.sector;
     }
 
     if ($scope.filtro.origen !==''){
-      $scope.SelectUI2s.SelectOrigenConcepto=[$scope.filtro.origen];
+      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.origen;
     }else{
-      $scope.SelectUI2s.SelectOrigenConcepto=[$scope.filtro.concepto];
+      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.concepto;
     }
 
-    $scope.SelectUI2s.SelectJurisdiccion=[$scope.filtro.jurisdiccion];
-    $scope.SelectUI2s.SelectDonante=[$scope.filtro.donante];
-
+    $scope.SelectUI2s.SelectJurisdiccion=$scope.filtro.jurisdiccion;
+    $scope.SelectUI2s.SelectDonante=$scope.filtro.donante;
 
   });
