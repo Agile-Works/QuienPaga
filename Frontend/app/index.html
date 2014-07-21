@@ -33,9 +33,8 @@
         </div>
         <div id="subBody" style="margin-top:40px;">
           <div id="container"  style="width:100%;max-width: 1024px;margin:auto;overflow:hidden;">
-              <p ng-show="displayGif" style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>
               <div id="right" style="width:50%;float:left; margin:auto;min-width:320px;margin:0 auto">  
-                <div google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="height:230px;padding:0;width:100%;margin:0 auto"></div>
+                <div id="chart" google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="height:230px;padding:0;width:100%;margin:0 auto"></div>
                 <div id="table" style="margin-top:30px;" ng-show="displayTable">
                   <div class="gridStyle" ng-grid="gridOptions"></div>
                 </div>

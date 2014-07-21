@@ -3,10 +3,24 @@
 angular.module('quienPagaApp')
   .controller('MainCtrl', function ($scope,$http,DataService,$filter,$location) {
     $scope.filtro={partido:'',sector:'',jurisdiccion:'', origen:'', concepto:'', donante:'', agruparpor : 'Partido'};
-
-    $scope.Selectores=DataService.GetSelectors($scope.filtro);
-    $scope.myData=[];
     $scope.SelectUI2s={SelectPartidoSector:'', SelectJurisdiccion:'', SelectOrigenConcepto:'', SelectDonante:''};
+
+    $scope.displayGif=true;
+    $scope.hideBody=true;
+    
+    $scope.Selectores=DataService.GetSelectors($scope.filtro);
+    if ($scope.filtro.partido !==''){
+      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.partido;
+    }else{
+      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.sector;
+    }
+
+    if ($scope.filtro.origen !==''){
+      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.origen;
+    }else{
+      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.concepto;
+    }
+    $scope.myData=[];
     $scope.gridOptions = { data: 'myData' };
     $scope.displayTable=false;
     if (window.location.hash.indexOf('#') === -1){
@@ -47,7 +61,7 @@ angular.module('quienPagaApp')
     }
 
     $scope.Grafica=function(){
-      $scope.displayGif=true;
+      document.getElementById('chart').innerHTML='<p style="width: 70px; margin:70px auto;"><img src="/Portals/_Sudestada/QuienPaga/scripts/wait.GIF"></p>';
       $scope.myData=[];
       $scope.displayTable=false;
       $scope.gridOptions = { data: 'myData' };
@@ -142,21 +156,24 @@ angular.module('quienPagaApp')
         MainChart.type = 'PieChart';
         MainChart.data=chartdata;
         if (angular.lowercase($scope.filtro.agruparpor) === 'partido'){
-          MainChart.options = {displayExactValues: true,width: 500,height: 220,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: ['#ff9900','#3366cc','#dc3912','#990099','#109618']};
+          MainChart.options = {displayExactValues: true,width: 1024,height: 220,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: ['#ff9900','#3366cc','#dc3912','#990099','#109618']};
         }else{
-          MainChart.options = {displayExactValues: true,width: 500,height: 220,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
+          MainChart.options = {displayExactValues: true,width: 1024,height: 220,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
         }
         
         MainChart.formatters = {number : [{columnNum: 1, pattern: '$ #,##0.00'}]};
         $scope.chart = MainChart;
+        $scope.displayGif=false;
+
       });
-      $scope.displayGif=false;
 
     };
 
     $scope.Grafica();
 
-    $scope.displayGif=false;
+    $scope.loadchart=function(){
+      $scope.displayGif=false;
+    };
 
     $scope.onSelectRowFunction = function(selectedItem){
       if (angular.lowercase($scope.filtro.agruparpor) ==='partido'){
@@ -531,20 +548,8 @@ angular.module('quienPagaApp')
 
       $scope.Grafica();
     });
- 
-    if ($scope.filtro.partido !==''){
-      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.partido;
-    }else{
-      $scope.SelectUI2s.SelectPartidoSector=$scope.filtro.sector;
-    }
-
-    if ($scope.filtro.origen !==''){
-      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.origen;
-    }else{
-      $scope.SelectUI2s.SelectOrigenConcepto=$scope.filtro.concepto;
-    }
-
     $scope.SelectUI2s.SelectJurisdiccion=$scope.filtro.jurisdiccion;
     $scope.SelectUI2s.SelectDonante=$scope.filtro.donante;
+    $scope.hideBody=false;
 
   });
