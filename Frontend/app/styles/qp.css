@@ -1,0 +1,35 @@
+#subHeader > div#search {
+    height: auto !important;
+}
+div.select2-container {
+    margin: 10px 2% !important;
+    width: 50% !important;
+}
+#s2id_SelectJurisdiccion, #s2id_SelectDonante {
+    width: 30% !important;
+}
+fieldset{
+    border-radius: 8px;
+    border: 1px solid #ccc;    
+}
+#subBody {
+    overflow: hidden;
+}
+legend{
+    text-align: left;
+    margin: 0;
+}
+#s2id_SelectGroupBy{
+    margin-right: auto !important;
+    margin-left: auto !important;
+    display: block;
+    width: 59% !important;
+    padding-left: 5%;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+#right/*,#left*/{
+    padding-left: 15%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
