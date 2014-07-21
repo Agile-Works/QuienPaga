@@ -33,14 +33,7 @@
         </div>
         <div id="subBody" style="margin-top:40px;">
           <div id="container"  style="width:100%;max-width: 1024px;margin:auto;overflow:hidden;">
-              <div id="right" style="width:50%;float:left; margin:auto;min-width:320px;margin:0 auto">  
-                <div id="chart" google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="height:230px;padding:0;width:100%;margin:0 auto"></div>
-                <div id="table" style="margin-top:30px;" ng-show="displayTable">
-                  <div class="gridStyle" ng-grid="gridOptions"></div>
-                </div>
-              </div>
-
-             <div id="left" style="width:50%;float:left;vertical-align:top;min-width:320px;margin:0 auto">
+             <div id="left" style="float:right;min-width:50%;margin:0 93px 0 auto">
                 <select ui-select2="" id="SelectGroupBy" ng-model="filtro.agruparpor" data-placeholder="Agrupar por..." style="width:210px;margin:10px auto">
                      <option value="Partido">Partido</option>
                      <option value="Sector">Sector</option>
@@ -49,7 +42,14 @@
                      <option value="Concepto">Concepto</option>
                      <option value="Donante">Donante</option>
                 </select>
-              </div>                 
+              </div>
+              <div style="clear:both;"></div>
+              <div id="right" style="min-width:320px;margin:0 auto">  
+                <div id="chart" google-chart chart="chart" select="onSelectRowFunction(selectedItem)" class="grafica" style="height:230px;padding:0;width:100%;margin:0 auto"></div>
+                <div id="table" style="margin-top:30px;" ng-show="displayTable">
+                  <div class="gridStyle" ng-grid="gridOptions"></div>
+                </div>
+              </div>                               
             </div>
           </div>
         </div>

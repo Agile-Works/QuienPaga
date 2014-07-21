@@ -20,16 +20,13 @@ legend{
     margin: 0;
 }
 #s2id_SelectGroupBy{
-    margin-right: auto !important;
+    margin-right: 0 !important;
     margin-left: auto !important;
     display: block;
-    width: 59% !important;
-    padding-left: 5%;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
+    width: 58% !important;
 }
 #right/*,#left*/{
-    padding-left: 15%;
+    padding-left: 11%;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
