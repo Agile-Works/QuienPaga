@@ -156,7 +156,30 @@ angular.module('quienPagaApp')
         MainChart.type = 'PieChart';
         MainChart.data=chartdata;
         if (angular.lowercase($scope.filtro.agruparpor) === 'partido'){
-          MainChart.options = {displayExactValues: true,width: 1024,height: 220,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: ['#ff9900','#3366cc','#dc3912','#990099','#109618']};
+          var FrenteAmplio='#FF9900';
+          var PartidoNacional='#3366CC';
+          var PartidoColorado='#DC3912';
+          var PartidoIndependiente='#990099';
+          var AsambleaPopular='#109618';
+          var chartcolors=[];
+          angular.forEach(chartdata, function(value){
+            console.log(angular.lowercase(value[0]));
+
+            if(angular.lowercase(value[0])==='frente amplio'){
+              chartcolors.push(FrenteAmplio);
+            }else if (angular.lowercase(value[0])==='partido nacional'){
+              chartcolors.push(PartidoNacional);
+            }else if (angular.lowercase(value[0])==='partido colorado'){
+              chartcolors.push(PartidoColorado);
+            }else if (angular.lowercase(value[0])==='partido independiente'){
+              chartcolors.push(PartidoIndependiente);
+            }else if (angular.lowercase(value[0])!==null && angular.lowercase(value[0])!=='nombre'){
+              chartcolors.push(AsambleaPopular);
+            }
+          });
+          console.log(chartcolors);
+
+          MainChart.options = {displayExactValues: true,width: 1024,height: 220,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}, colors: chartcolors};
         }else{
           MainChart.options = {displayExactValues: true,width: 1024,height: 220,is3D: false,pieHole: 0.4,chartArea: {left:10,top:10,bottom:0,height:'100%'}};
         }
